@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CCTS Compliance Calculator — Carbon Intelligence India</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="chat.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+<!-- ── Navigation ───────────────────────────────────────────── -->
+<nav class="nav-bar">
+  <div style="max-width:1200px;margin:0 auto;padding:0 1.5rem;display:flex;align-items:center;gap:2rem;height:56px;">
+    <a href="index.html" class="nav-logo">Carbon Intelligence <span>India</span></a>
+    <div style="display:flex;gap:0.25rem;margin-left:auto;flex-wrap:wrap;">
+      <a href="index.html"          class="nav-link active">CCTS Calculator</a>
+      <a href="policy-tracker.html" class="nav-link">Policy Tracker</a>
+      <a href="about.html"          class="nav-link">About</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ── Ticker ────────────────────────────────────────────────── -->
+<div class="ticker" style="padding:0.4rem 0;">
+  <div class="ticker-inner">
+    <span class="ticker-item">⚡ CCTS Full Trading Launch: Mid-2026</span>
+    <span class="ticker-item">🏭 490 Obligated Industrial Units — FY2026 First Compliance Period Active</span>
+    <span class="ticker-item">📊 Carbon Price Collar: ₹150 (Floor) — ₹250 (Expected) — ₹600 (Ceiling) per tCO₂e</span>
+    <span class="ticker-item">🌱 India Non-Fossil Capacity: 52.2% — NDC 2030 Target Achieved 5 Years Early</span>
+    <span class="ticker-item">📋 BRSR Scope 3 Mandatory: Top 250 Listed Companies from FY2025–26</span>
+    <span class="ticker-item">🔬 MRV Capacity Gap: 750+ ACVAs Needed — Critical Bottleneck at CCTS Launch</span>
+    <span class="ticker-item">📈 India GSS+ Debt Market: USD 55.9B — 186% Growth Since 2021</span>
+  </div>
+</div>
+
+<!-- ── Prototype Notice ──────────────────────────────────────── -->
+<div style="background:#fffbf0;border-bottom:1px solid #e6d84a;padding:0.45rem 0;">
+  <div style="max-width:1200px;margin:0 auto;padding:0 1.5rem;font-size:0.77rem;color:#7a6500;display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;">
+    <span style="font-weight:700;white-space:nowrap;">Prototype only.</span>
+    This tool is not affiliated with or authorised by Deloitte Touche Tohmatsu Limited or any of its member firms. Outputs are indicative only and do not constitute legal, financial, or compliance advice.
+    <a href="about.html" style="color:#7a6500;font-weight:600;margin-left:auto;white-space:nowrap;text-decoration:underline;">Full disclaimer →</a>
+  </div>
+</div>
+
+<!-- ── Page Hero ─────────────────────────────────────────────── -->
+<div class="page-hero">
+  <div style="max-width:1200px;margin:0 auto;padding:0 1.5rem;">
+    <div class="hero-badge">India Carbon Market</div>
+    <h1>CCTS Compliance Calculator</h1>
+    <p>Calculate your compliance position under India's Carbon Credit Trading Scheme. Know your CCC surplus or deficit, financial exposure, and peer benchmark — before full trading opens mid-2026.</p>
+  </div>
+</div>
+
+<!-- ── Main Content ──────────────────────────────────────────── -->
+<main style="max-width:1200px;margin:0 auto;padding:2rem 1.5rem;">
+
+  <!-- Stat row -->
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2rem;" class="form-grid">
+    <div class="stat-box">
+      <div class="stat-value green">490</div>
+      <div class="stat-label">Obligated Units</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-value">9</div>
+      <div class="stat-label">CCTS Sectors</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-value amber">₹250</div>
+      <div class="stat-label">Expected Price /tCO₂e</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-value red">76%</div>
+      <div class="stat-label">Emissions: Steel + Cement</div>
+    </div>
+  </div>
+
+  <!-- Two-column layout: Form + Results -->
+  <div style="display:grid;grid-template-columns:420px 1fr;gap:2rem;align-items:start;" class="results-grid">
+
+    <!-- ── LEFT: Form ─────────────────────────────────────── -->
+    <div>
+      <div class="card">
+        <p class="section-header">Company Inputs</p>
+
+        <!-- Sector -->
+        <div style="margin-bottom:1.25rem;">
+          <label class="form-label" for="sector">Sector</label>
+          <div class="form-select-wrapper">
+            <select id="sector" class="form-select">
+              <option value="">— Select your sector —</option>
+            </select>
+          </div>
+          <div id="sector-fact" style="font-size:0.78rem;color:#666;margin-top:0.4rem;min-height:1.2rem;line-height:1.4;font-style:italic;"></div>
+        </div>
+
+        <!-- Production -->
+        <div style="margin-bottom:1.25rem;">
+          <label class="form-label" for="production">Annual Production Output</label>
+          <div style="display:flex;gap:0.5rem;align-items:center;">
+            <input type="number" id="production" class="form-input"
+              placeholder="e.g. 2000000" min="1" step="1000"
+              style="flex:1;" />
+            <span id="production-unit" style="font-size:0.8rem;color:#666;white-space:nowrap;min-width:80px;">tonnes</span>
+          </div>
+        </div>
+
+        <!-- Intensity -->
+        <div style="margin-bottom:0.5rem;">
+          <label class="form-label" for="intensity">Emission Intensity</label>
+          <input type="number" id="intensity" class="form-input"
+            placeholder="tCO₂e per unit of output" min="0" step="0.001" />
+        </div>
+        <label class="toggle-row" for="unknown-intensity">
+          <input type="checkbox" id="unknown-intensity" class="toggle-checkbox" />
+          I don't know my emission intensity — use sector average
+        </label>
+
+        <hr class="divider" />
+
+        <button class="btn-primary" style="width:100%;" onclick="runCalculator()">
+          Calculate Compliance Position
+        </button>
+
+        <p style="font-size:0.75rem;color:#888;text-align:center;margin-top:0.75rem;">
+          Outputs are indicative. See <a href="about.html" style="color:var(--green-dark);">methodology</a> for limitations.
+        </p>
+      </div>
+
+      <!-- Regulatory Calendar -->
+      <div class="card" style="margin-top:1.5rem;">
+        <p class="section-header">Upcoming CCTS Deadlines</p>
+        <div id="deadline-list"></div>
+      </div>
+    </div>
+
+    <!-- ── RIGHT: Results ─────────────────────────────────── -->
+    <div id="results-panel">
+      <!-- Placeholder -->
+      <div class="results-placeholder" id="results-placeholder">
+        <div class="placeholder-icon">📊</div>
+        <h3>Your Results Appear Here</h3>
+        <p>Select your sector, enter your annual production, and optionally your emission intensity — then click Calculate.</p>
+      </div>
+    </div>
+
+  </div><!-- end grid -->
+
+  <!-- Deloitte CTA strip -->
+  <div class="card card-dark" style="margin-top:2.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;">
+    <div>
+      <div style="font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--green);font-weight:700;margin-bottom:0.3rem;">Built for India's CCTS Advisory Market</div>
+      <div style="font-size:1rem;font-weight:700;color:#fff;">This prototype demonstrates what a client-facing compliance tool could look like for a firm like Deloitte.</div>
+      <div style="font-size:0.83rem;color:#aaa;margin-top:0.25rem;">MRV setup · CCC trading strategy · BRSR assurance · Decarbonisation roadmaps</div>
+    </div>
+    <a href="about.html" class="btn-primary" style="white-space:nowrap;">
+      Methodology & Services →
+    </a>
+  </div>
+
+</main>
+
+<!-- ── Footer ────────────────────────────────────────────────── -->
+<footer class="site-footer">
+  <div style="max-width:1200px;margin:0 auto;padding:0 1.5rem;">
+    <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:1rem;">
+      <div>
+        <div style="color:var(--green);font-weight:700;font-size:0.9rem;margin-bottom:0.4rem;">Carbon Intelligence India</div>
+        <div>A prototype tool built for Deloitte India's CCTS advisory practice.</div>
+      </div>
+      <div style="text-align:right;">
+        <div style="margin-bottom:0.25rem;"><a href="policy-tracker.html">Policy Tracker</a></div>
+        <div style="margin-bottom:0.25rem;"><a href="about.html">About & Methodology</a></div>
+      </div>
+    </div>
+    <div style="border-top:1px solid #333;padding-top:1rem;">
+      This tool is a prototype demonstration. Outputs are indicative only and do not constitute legal, financial, or compliance advice.
+      Data sourced from BEE, MoEFCC, MNRE, UNFCCC, and the India Climate &amp; Environment Policy Landscape Report (April 2026).
+    </div>
+  </div>
+</footer>
+
+<!-- ── Scripts ────────────────────────────────────────────────── -->
+<script src="data/sectors.js"></script>
+<script src="data/calculator-data.js"></script>
+<script>
+
+// ── Populate sector dropdown ──────────────────────────────────
+(function populateSectors() {
+  const sel = document.getElementById('sector');
+  getSectorOptions().forEach(opt => {
+    const o = document.createElement('option');
+    o.value = opt.key;
+    o.textContent = opt.name;
+    sel.appendChild(o);
+  });
+})();
+
+// ── Unit plural helper ────────────────────────────────────────
+// "tonne of crude steel" → "tonnes of crude steel"
+function pluralUnit(u) { return u.replace(/^tonne\b/, 'tonnes'); }
+
+// ── Sector fact + unit update ─────────────────────────────────
+document.getElementById('sector').addEventListener('change', function() {
+  const s = SECTOR_DATA[this.value];
+  document.getElementById('sector-fact').textContent = s ? s.keyFact : '';
+  document.getElementById('production-unit').textContent = s ? pluralUnit(s.outputUnit) + '/yr' : 'tonnes/yr';
+  document.getElementById('intensity').placeholder = s ? `tCO₂e per ${s.outputUnit}` : 'tCO₂e per unit of output';
+});
+
+// ── Toggle intensity input ────────────────────────────────────
+document.getElementById('unknown-intensity').addEventListener('change', function() {
+  const input = document.getElementById('intensity');
+  input.disabled = this.checked;
+  input.style.opacity = this.checked ? '0.4' : '1';
+  if (this.checked) input.value = '';
+});
+
+// ── Deadline list ─────────────────────────────────────────────
+(function renderDeadlines() {
+  const container = document.getElementById('deadline-list');
+  REGULATORY_DEADLINES.slice(0, 5).forEach(d => {
+    const colorMap = { critical: 'var(--red)', high: 'var(--amber)', medium: 'var(--green-dark)' };
+    container.innerHTML += `
+      <div style="display:flex;align-items:baseline;gap:0.75rem;padding:0.5rem 0;border-bottom:1px solid var(--grey-100);">
+        <span style="font-size:0.72rem;font-weight:700;color:${colorMap[d.urgency]};min-width:90px;white-space:nowrap;">${d.date}</span>
+        <span style="font-size:0.83rem;font-weight:600;color:var(--text);line-height:1.3;">${d.title}</span>
+      </div>`;
+  });
+})();
+
+// ── Main calculator ───────────────────────────────────────────
+let benchmarkChart = null;
+
+function runCalculator() {
+  const sectorKey  = document.getElementById('sector').value;
+  const production = parseFloat(document.getElementById('production').value);
+  const unknownCb  = document.getElementById('unknown-intensity').checked;
+  const intensityV = document.getElementById('intensity').value;
+
+  // Validation
+  if (!sectorKey) { alert('Please select a sector.'); return; }
+  if (!production || production <= 0) { alert('Please enter a valid annual production figure.'); return; }
+  if (!unknownCb && (!intensityV || parseFloat(intensityV) < 0)) {
+    alert('Please enter your emission intensity or check "I don\'t know".'); return;
+  }
+
+  const actualIntensity = unknownCb ? null : parseFloat(intensityV);
+  let result;
+  try {
+    result = calculateCCTS({ sectorKey, annualProduction: production, actualIntensity });
+  } catch(e) {
+    alert(e.message); return;
+  }
+
+  renderResults(result);
+}
+
+function renderResults(r) {
+  const panel = document.getElementById('results-panel');
+  const s = r.compliance_status || r.status;
+
+  const statusConfig = {
+    over_complier:  { label:'OVER-COMPLIER', sub:'Eligible to sell CCCs', cls:'over',  icon:'✓', iconColor:'var(--green-dark)' },
+    under_complier: { label:'UNDER-COMPLIER', sub:'Must purchase CCCs',   cls:'under', icon:'✗', iconColor:'var(--red)' },
+    at_threshold:   { label:'AT THRESHOLD',  sub:'Within 2% of target',  cls:'threshold', icon:'~', iconColor:'var(--amber)' },
+  };
+  const sc = statusConfig[s];
+
+  const deltaAbs  = Math.abs(r.cccDelta);
+  const deltaType = r.cccDelta > 0 ? 'DEFICIT (must buy)' : r.cccDelta < 0 ? 'SURPLUS (can sell)' : 'AT BALANCE';
+  const deltaColor = r.cccDelta > 0 ? 'var(--red)' : r.cccDelta < 0 ? 'var(--green-dark)' : 'var(--amber)';
+
+  // Price rows
+  const priceRows = r.priceScenarios.map(sc => {
+    const isRevenue = sc.totalInr < 0;
+    const crore = Math.abs(sc.totalCrore).toFixed(2);
+    const usdM  = Math.abs(sc.totalUsd / 1e6).toFixed(2);
+    return `
+      <tr>
+        <td>${sc.labelFull}</td>
+        <td class="${isRevenue ? 'negative' : 'positive'}" style="text-align:right;">
+          ${isRevenue ? '+' : '−'} ₹${crore} Cr
+        </td>
+        <td class="${isRevenue ? 'negative' : 'positive'}" style="text-align:right;">
+          ${isRevenue ? '+' : '−'} USD ${usdM}M
+        </td>
+        <td style="text-align:right;color:#555;">₹${Math.abs(sc.perUnitInr).toFixed(1)}/t</td>
+      </tr>`;
+  }).join('');
+
+  // Recommendation cards
+  const recCards = r.recommendations.map(rec => {
+    const urgencyClass  = rec.urgency === 'Immediate' ? 'urgent' : rec.urgency === 'Within 6 months' ? 'medium' : 'strategic';
+    const badgeClass    = rec.urgency === 'Immediate' ? 'badge-immediate' : rec.urgency === 'Within 6 months' ? 'badge-6months' : 'badge-strategic';
+    return `
+      <div class="rec-card ${urgencyClass}">
+        <div class="rec-header">
+          <span class="rec-icon">${rec.icon}</span>
+          <span class="rec-title">${rec.service}</span>
+          <span class="rec-urgency-badge ${badgeClass}">${rec.urgency}</span>
+        </div>
+        <div class="rec-trigger">${rec.trigger}</div>
+        <div class="rec-body">${rec.description}</div>
+      </div>`;
+  }).join('');
+
+  // Not-notified warning
+  const notifWarning = !r.targetOfficiallyNotified
+    ? `<div class="note-box" style="margin-bottom:1rem;">⚠️ BEE has not yet officially notified this sector's CCTS reduction target (April 2026). A proxy reduction range of ${(SECTOR_DATA[r.sectorKey].reductionRange[0]*100).toFixed(1)}%–${(SECTOR_DATA[r.sectorKey].reductionRange[1]*100).toFixed(1)}% has been applied. The baseline intensity for this sector is a third-party estimate from industry benchmarks — not BEE's individual entity survey. Outputs should be treated as directional only.</div>`
+    : '';
+
+  // Estimated intensity warning
+  const estimatedWarning = r.intensityWasEstimated
+    ? `<div class="note-box" style="margin-bottom:1rem;">📌 Sector average intensity (${r.benchmark.sectorAvgIntensity} tCO₂e/${r.outputUnit}) used as proxy. For your actual CCTS position, provide your facility-level emission data.</div>`
+    : '';
+
+  panel.innerHTML = `
+    ${notifWarning}
+    ${estimatedWarning}
+
+    <!-- Status card -->
+    <div class="status-card ${sc.cls}" style="margin-bottom:1.25rem;">
+      <div class="status-icon" style="color:${sc.iconColor};">${sc.icon}</div>
+      <div>
+        <div class="status-label ${sc.cls}">${sc.label}</div>
+        <div class="status-value">${sc.sub}</div>
+        <div style="font-size:0.83rem;color:#555;margin-top:0.25rem;">
+          ${r.sectorName} · ${r.annualProduction.toLocaleString()} ${pluralUnit(r.outputUnit)}/year
+        </div>
+      </div>
+    </div>
+
+    <!-- CCC Delta -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.25rem;">
+      <div class="stat-box">
+        <div class="stat-value" style="color:${deltaColor};">${deltaAbs.toLocaleString()}</div>
+        <div class="stat-label">CCC ${deltaType}</div>
+        <div style="font-size:0.73rem;color:#888;margin-top:0.2rem;">tonnes CO₂e</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-value ${r.benchmark.gapToTargetPct > 0 ? 'red' : 'green'}">${r.benchmark.gapToTargetPct > 0 ? '+' : ''}${(r.benchmark.gapToTargetPct * 100).toFixed(1)}%</div>
+        <div class="stat-label">vs CCTS Target</div>
+        <div style="font-size:0.73rem;color:#888;margin-top:0.2rem;">~${r.benchmark.percentile}th percentile</div>
+      </div>
+    </div>
+
+    <!-- Benchmark — shown first: most reliable signal regardless of data quality -->
+    <div class="card" style="margin-bottom:1.25rem;padding:1rem;">
+      <p class="section-header">Sector Peer Benchmark — ${r.sectorName}</p>
+      <div style="margin-bottom:1rem;">
+        ${renderBenchmarkRow('Your Intensity', r.benchmark.userIntensity, r.benchmark.sectorAvgIntensity * 1.4, 'bar-user')}
+        ${renderBenchmarkRow('Sector Average', r.benchmark.sectorAvgIntensity, r.benchmark.sectorAvgIntensity * 1.4, 'bar-avg')}
+        ${renderBenchmarkRow('CCTS Target', r.benchmark.cctsTargetIntensity, r.benchmark.sectorAvgIntensity * 1.4, 'bar-target')}
+        ${renderBenchmarkRow('Top Quartile', r.benchmark.topQuartileIntensity, r.benchmark.sectorAvgIntensity * 1.4, 'bar-topq')}
+      </div>
+      <div style="font-size:0.75rem;color:#888;">
+        tCO₂e / ${r.outputUnit} · Source: ${r.source}
+      </div>
+    </div>
+
+    <!-- Financial Exposure -->
+    <div class="card" style="margin-bottom:1.25rem;padding:1rem;">
+      <p class="section-header">Financial Exposure — Three Price Scenarios</p>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Price Scenario</th>
+            <th style="text-align:right;">Total (₹ Crore)</th>
+            <th style="text-align:right;">Total (USD)</th>
+            <th style="text-align:right;">Per Tonne</th>
+          </tr>
+        </thead>
+        <tbody>${priceRows}</tbody>
+      </table>
+      <p style="font-size:0.73rem;color:#888;margin-top:0.5rem;">
+        ${r.cccDelta < 0 ? '+ indicates revenue to company' : '− indicates cost to company'} ·
+        INR/USD indicative rate ₹84.5/USD — verify before financial decisions
+      </p>
+    </div>
+
+    <!-- Deloitte Recommendations — collapsed by default -->
+    <div style="margin-bottom:1.25rem;">
+      <button class="btn-secondary" style="width:100%;display:flex;justify-content:space-between;align-items:center;padding:0.7rem 1rem;" onclick="toggleRecs(this)">
+        <span>Deloitte Advisory Recommendations (${r.recommendations.length})</span>
+        <span style="font-size:0.78rem;opacity:0.7;">▼ Show</span>
+      </button>
+      <div style="display:none;margin-top:0.75rem;">
+        ${recCards}
+      </div>
+    </div>
+
+    <!-- Methodology -->
+    <div class="disclaimer" style="margin-bottom:1.25rem;">
+      <strong>Methodology:</strong> ${r.methodologyNote}
+    </div>
+
+    <!-- Action CTAs -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;">
+      <button class="btn-primary" onclick="window.print()">
+        Export as PDF
+      </button>
+      <a href="policy-tracker.html?sector=${r.sectorKey}" class="btn-secondary" style="text-align:center;">
+        View Sector Policies →
+      </a>
+    </div>
+  `;
+}
+
+function toggleRecs(btn) {
+  const container = btn.nextElementSibling;
+  const icon = btn.querySelector('span:last-child');
+  const hidden = container.style.display === 'none';
+  container.style.display = hidden ? 'block' : 'none';
+  icon.textContent = hidden ? '▲ Hide' : '▼ Show';
+}
+
+function renderBenchmarkRow(label, value, maxValue, barClass) {
+  const pct = Math.min(100, (value / maxValue) * 100).toFixed(1);
+  return `
+    <div class="benchmark-row">
+      <div class="benchmark-label">
+        <span>${label}</span>
+        <span style="font-weight:700;">${value.toFixed(4)}</span>
+      </div>
+      <div class="benchmark-bar-bg">
+        <div class="benchmark-bar-fill ${barClass}" style="width:${pct}%;"></div>
+      </div>
+    </div>`;
+}
+
+</script>
+
+<!-- ── Chat Widget ───────────────────────────────────────────── -->
+<div class="cw" id="cw">
+
+  <!-- Trigger bubble -->
+  <button class="cw__bubble" id="cwBubble" aria-expanded="false" aria-label="Open carbon intelligence assistant">
+    <span class="cw__bubble-icon">◈</span>
+    <span class="cw__bubble-label">Ask Carbon AI</span>
+  </button>
+
+  <!-- Chat panel -->
+  <div class="cw__panel" id="cwPanel" role="dialog" aria-modal="true" aria-label="Carbon Intelligence Chat" aria-hidden="true">
+
+    <!-- Header -->
+    <div class="cw__header">
+      <div class="cw__header-info">
+        <div class="cw__avatar">CI</div>
+        <div>
+          <div class="cw__name">Carbon Intelligence</div>
+          <div class="cw__status">
+            <span class="cw__dot"></span>
+            <span class="cw__subtitle">AI assistant · Informational only · Not a Deloitte service</span>
+          </div>
+        </div>
+      </div>
+      <button class="cw__close" id="cwClose" aria-label="Close chat">✕</button>
+    </div>
+
+    <!-- Messages -->
+    <div class="cw__messages" id="cwMessages"></div>
+
+    <!-- Suggested questions (hidden after first send) -->
+    <div class="cw__suggestions" id="cwSuggestions"></div>
+
+    <!-- Input -->
+    <div class="cw__footer">
+      <input
+        type="text"
+        class="cw__input"
+        id="cwInput"
+        placeholder="Ask about CCTS, policies, benchmarks…"
+        autocomplete="off"
+        maxlength="400"
+      />
+      <button class="cw__send" id="cwSend" aria-label="Send message">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M14 8L2 2l2.5 6L2 14l12-6z" fill="currentColor"/>
+        </svg>
+      </button>
+    </div>
+
+  </div>
+</div>
+<script src="chat.js"></script>
+</body>
+</html>

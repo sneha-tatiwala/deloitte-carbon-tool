@@ -1,0 +1,19 @@
+{
+  "name": "deloitte-carbon-tool",
+  "version": "1.0.0",
+  "description": "Deloitte India — CCTS Carbon Intelligence Platform",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [],
+  "author": "Sneha Tatiwala",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "dotenv": "^17.4.0",
+    "express": "^5.2.1",
+    "node-fetch": "^2.7.0"
+  }
+}

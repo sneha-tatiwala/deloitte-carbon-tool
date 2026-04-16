@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Policy Intelligence Tracker — Carbon Intelligence India</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="chat.css" />
+</head>
+<body>
+
+<!-- ── Navigation ───────────────────────────────────────────── -->
+<nav class="nav-bar">
+  <div style="max-width:1200px;margin:0 auto;padding:0 1.5rem;display:flex;align-items:center;gap:2rem;height:56px;">
+    <a href="index.html" class="nav-logo">Carbon Intelligence <span>India</span></a>
+    <div style="display:flex;gap:0.25rem;margin-left:auto;flex-wrap:wrap;">
+      <a href="index.html"          class="nav-link">CCTS Calculator</a>
+      <a href="policy-tracker.html" class="nav-link active">Policy Tracker</a>
+      <a href="about.html"          class="nav-link">About</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ── Prototype Notice ──────────────────────────────────────── -->
+<div style="background:#fffbf0;border-bottom:1px solid #e6d84a;padding:0.45rem 0;">
+  <div style="max-width:1200px;margin:0 auto;padding:0 1.5rem;font-size:0.77rem;color:#7a6500;display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;">
+    <span style="font-weight:700;white-space:nowrap;">Prototype only.</span>
+    This tool is not affiliated with or authorised by Deloitte Touche Tohmatsu Limited. Outputs are indicative only and do not constitute legal or compliance advice.
+    <a href="about.html" style="color:#7a6500;font-weight:600;margin-left:auto;white-space:nowrap;text-decoration:underline;">Full disclaimer →</a>
+  </div>
+</div>
+
+<!-- ── Deadline Strip ────────────────────────────────────────── -->
+<div class="deadline-strip">
+  <div style="max-width:1200px;margin:0 auto;padding:0 1.5rem;display:flex;overflow-x:auto;" id="deadline-strip-row"></div>
+</div>
+
+<!-- ── Page Hero ─────────────────────────────────────────────── -->
+<div class="page-hero">
+  <div style="max-width:1200px;margin:0 auto;padding:0 1.5rem;">
+    <div class="hero-badge">Policy Intelligence</div>
+    <h1>India Climate & Environment Policy Tracker</h1>
+    <p>Complete database of India's climate and environmental legislation — historical foundations to forthcoming commitments. Filtered for CCTS, BRSR, and Deloitte advisory relevance.</p>
+  </div>
+</div>
+
+<!-- ── Filter Bar ─────────────────────────────────────────────── -->
+<div class="filter-bar">
+  <div style="max-width:1200px;margin:0 auto;padding:0 1.5rem;">
+
+    <!-- Search -->
+    <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;margin-bottom:0.75rem;">
+      <input type="text" id="search-input" class="search-input"
+        placeholder="🔍  Search policies — e.g. CCTS, BRSR, forest, hydrogen…"
+        oninput="applyFilters()" />
+      <div id="results-count" style="font-size:0.82rem;color:#666;white-space:nowrap;"></div>
+    </div>
+
+    <!-- Filter chips -->
+    <div style="display:flex;gap:0.5rem;flex-wrap:wrap;align-items:center;">
+      <span style="font-size:0.75rem;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:0.06em;margin-right:0.25rem;">Filter:</span>
+
+      <!-- Status -->
+      <button class="filter-chip active" data-filter="status" data-value="" onclick="setFilter('status','',this)">All</button>
+      <button class="filter-chip" data-filter="status" data-value="active" onclick="setFilter('status','active',this)">Active</button>
+      <button class="filter-chip" data-filter="status" data-value="forthcoming" onclick="setFilter('status','forthcoming',this)">Forthcoming</button>
+      <button class="filter-chip" data-filter="status" data-value="historical" onclick="setFilter('status','historical',this)">Historical</button>
+
+      <span style="width:1px;height:20px;background:var(--grey-300);margin:0 0.25rem;"></span>
+
+      <!-- Category -->
+      <button class="filter-chip active" data-filter="category" data-value="" onclick="setFilter('category','',this)">All Categories</button>
+      <button class="filter-chip" data-filter="category" data-value="Carbon Markets" onclick="setFilter('category','Carbon Markets',this)">Carbon Markets</button>
+      <button class="filter-chip" data-filter="category" data-value="Energy" onclick="setFilter('category','Energy',this)">Energy</button>
+      <button class="filter-chip" data-filter="category" data-value="Finance/ESG" onclick="setFilter('category','Finance/ESG',this)">Finance/ESG</button>
+      <button class="filter-chip" data-filter="category" data-value="Air Quality" onclick="setFilter('category','Air Quality',this)">Air Quality</button>
+      <button class="filter-chip" data-filter="category" data-value="Forest/Biodiversity" onclick="setFilter('category','Forest/Biodiversity',this)">Forest/Biodiversity</button>
+      <button class="filter-chip" data-filter="category" data-value="EV/Transport" onclick="setFilter('category','EV/Transport',this)">EV/Transport</button>
+      <button class="filter-chip" data-filter="category" data-value="International" onclick="setFilter('category','International',this)">International</button>
+      <button class="filter-chip" data-filter="category" data-value="Legislative" onclick="setFilter('category','Legislative',this)">Legislative</button>
+
+      <span style="width:1px;height:20px;background:var(--grey-300);margin:0 0.25rem;"></span>
+
+      <!-- Deloitte relevance toggle -->
+      <label class="filter-chip" id="deloitte-filter-btn" style="cursor:pointer;">
+        <input type="checkbox" id="deloitte-only" onchange="applyFilters()" style="accent-color:var(--green);width:12px;height:12px;" />
+        Deloitte Relevant Only
+      </label>
+    </div>
+  </div>
+</div>
+
+<!-- ── Policy Grid ────────────────────────────────────────────── -->
+<main style="max-width:1200px;margin:0 auto;padding:2rem 1.5rem;">
+
+  <!-- Summary stats -->
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2rem;" class="form-grid">
+    <div class="stat-box">
+      <div class="stat-value" id="stat-total">—</div>
+      <div class="stat-label">Total Policies</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-value green" id="stat-active">—</div>
+      <div class="stat-label">Currently Active</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-value amber" id="stat-forthcoming">—</div>
+      <div class="stat-label">Forthcoming</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-value" id="stat-deloitte">—</div>
+      <div class="stat-label">Deloitte-Relevant</div>
+    </div>
+  </div>
+
+  <!-- Policy cards grid -->
+  <div id="policy-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:1.25rem;" class="policy-grid">
+  </div>
+
+  <!-- Empty state -->
+  <div id="empty-state" style="display:none;">
+    <div class="results-placeholder">
+      <div class="placeholder-icon">🔍</div>
+      <h3>No policies match your filters</h3>
+      <p>Try clearing some filters or changing your search term.</p>
+      <button class="btn-secondary" style="margin-top:1rem;" onclick="resetFilters()">Reset All Filters</button>
+    </div>
+  </div>
+
+  <!-- Data note -->
+  <div class="disclaimer" style="margin-top:2rem;">
+    <strong>Data note:</strong> This database is sourced from government notifications (PIB, MoEFCC, MNRE, BEE, PRS India), UNFCCC NDC submissions, and the India Climate &amp; Environment Policy Landscape Report (April 2026).
+    This MVP uses static data. A production version would automate updates via scheduled scraping of open-access government sources.
+    Last updated: April 2026.
+    <strong>Scope:</strong> This tracker covers India's compliance and statutory policy framework — the Carbon Credit Trading Scheme, BRSR, renewable energy policy, forest and biodiversity legislation, and international climate commitments. Voluntary carbon market project development (Verra VCS, Gold Standard, CDM legacy registries) is outside the scope of this version.
+  </div>
+</main>
+
+<!-- ── Footer ────────────────────────────────────────────────── -->
+<footer class="site-footer">
+  <div style="max-width:1200px;margin:0 auto;padding:0 1.5rem;">
+    <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:1rem;">
+      <div>
+        <div style="color:var(--green);font-weight:700;font-size:0.9rem;margin-bottom:0.4rem;">Carbon Intelligence India</div>
+        <div>A prototype tool built for Deloitte India's CCTS advisory practice.</div>
+      </div>
+      <div style="text-align:right;">
+        <div style="margin-bottom:0.25rem;"><a href="index.html">CCTS Calculator</a></div>
+        <div><a href="about.html">About & Methodology</a></div>
+      </div>
+    </div>
+    <div style="border-top:1px solid #333;padding-top:1rem;">
+      Prototype demonstration only. Not for legal or compliance advice.
+    </div>
+  </div>
+</footer>
+
+<!-- ── Scripts ────────────────────────────────────────────────── -->
+<script src="data/sectors.js"></script>
+<script src="data/calculator-data.js"></script>
+<script src="data/policies.js"></script>
+<script>
+
+// ── State ─────────────────────────────────────────────────────
+const activeFilters = { status: '', category: '', sector: '' };
+
+// ── Deadline strip ────────────────────────────────────────────
+(function renderDeadlineStrip() {
+  const row = document.getElementById('deadline-strip-row');
+  REGULATORY_DEADLINES.forEach(d => {
+    row.innerHTML += `
+      <div class="deadline-item">
+        <div class="deadline-date">${d.date}</div>
+        <div class="deadline-title">${d.title}</div>
+      </div>`;
+  });
+})();
+
+// ── Stats ─────────────────────────────────────────────────────
+(function renderStats() {
+  document.getElementById('stat-total').textContent      = POLICIES.length;
+  document.getElementById('stat-active').textContent     = POLICIES.filter(p => p.status === 'active').length;
+  document.getElementById('stat-forthcoming').textContent = POLICIES.filter(p => p.status === 'forthcoming').length;
+  document.getElementById('stat-deloitte').textContent   = POLICIES.filter(p => p.deloitteRelevance).length;
+})();
+
+// ── URL param: pre-filter by sector ──────────────────────────
+(function checkUrlParams() {
+  const params = new URLSearchParams(window.location.search);
+  const sector = params.get('sector');
+  if (sector) {
+    activeFilters.sector = sector;
+  }
+})();
+
+// ── Filter logic ─────────────────────────────────────────────
+function setFilter(type, value, btn) {
+  // Deactivate all chips of same type
+  document.querySelectorAll(`[data-filter="${type}"]`).forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  activeFilters[type] = value;
+  applyFilters();
+}
+
+function resetFilters() {
+  activeFilters.status = '';
+  activeFilters.category = '';
+  activeFilters.sector = '';
+  document.getElementById('search-input').value = '';
+  document.getElementById('deloitte-only').checked = false;
+  document.querySelectorAll('.filter-chip[data-filter]').forEach(b => {
+    b.classList.remove('active');
+    if (b.dataset.value === '') b.classList.add('active');
+  });
+  applyFilters();
+}
+
+function applyFilters() {
+  const keyword       = document.getElementById('search-input').value.trim();
+  const deloitteOnly  = document.getElementById('deloitte-only').checked;
+
+  const filtered = filterPolicies({
+    category: activeFilters.category || null,
+    status:   activeFilters.status   || null,
+    sector:   activeFilters.sector   || null,
+    keyword,
+  }).filter(p => !deloitteOnly || p.deloitteRelevance);
+
+  renderGrid(filtered);
+
+  document.getElementById('results-count').textContent =
+    `${filtered.length} of ${POLICIES.length} policies`;
+}
+
+// ── Render grid ───────────────────────────────────────────────
+function renderGrid(policies) {
+  const grid  = document.getElementById('policy-grid');
+  const empty = document.getElementById('empty-state');
+
+  if (!policies.length) {
+    grid.innerHTML = '';
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+
+  // Sort: forthcoming first, then active descending by year
+  const sorted = [...policies].sort((a, b) => {
+    if (a.status === 'forthcoming' && b.status !== 'forthcoming') return -1;
+    if (b.status === 'forthcoming' && a.status !== 'forthcoming') return 1;
+    return b.year - a.year;
+  });
+
+  grid.innerHTML = sorted.map(p => buildPolicyCard(p)).join('');
+}
+
+function buildPolicyCard(p) {
+  const statusClass  = `status-${p.status}`;
+  const statusLabel  = p.status === 'forthcoming' ? 'Forthcoming' : p.status === 'active' ? 'Active' : 'Historical';
+  const deloitteClass = p.deloitteRelevance ? 'deloitte-relevant' : '';
+
+  const categoryTags = p.categories.map(c =>
+    `<span class="policy-tag">${c}</span>`).join('');
+
+  const deloitteTag = p.deloitteRelevance
+    ? `<span class="policy-tag deloitte">Deloitte Relevant</span>`
+    : '';
+
+  const deloitteSection = p.deloitteRelevance
+    ? `<div style="margin-top:0.75rem;padding-top:0.75rem;border-top:1px solid var(--grey-100);">
+        <div style="font-size:0.7rem;font-weight:700;color:var(--green-dark);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:0.25rem;">Deloitte Relevance</div>
+        <div style="font-size:0.8rem;color:#444;line-height:1.45;">${p.deloitteRelevance}</div>
+       </div>`
+    : '';
+
+  // Key provisions (show first 3)
+  const provisions = p.keyProvisions.slice(0, 3).map(kp =>
+    `<li style="font-size:0.8rem;color:#555;margin-bottom:0.2rem;line-height:1.4;">${kp}</li>`
+  ).join('');
+  const moreCount = p.keyProvisions.length - 3;
+  const moreNote  = moreCount > 0 ? `<li style="font-size:0.75rem;color:#888;list-style:none;margin-top:0.25rem;">+${moreCount} more provisions</li>` : '';
+
+  return `
+    <div class="policy-card ${deloitteClass}">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:0.5rem;margin-bottom:0.5rem;">
+        <div>
+          <span class="policy-year-badge">${p.year}</span>
+          <span class="policy-status-badge ${statusClass}">${statusLabel}</span>
+        </div>
+      </div>
+      <div class="policy-title">${p.title}</div>
+      <div class="policy-summary">${p.summary}</div>
+      <ul style="padding-left:1rem;margin:0 0 0.75rem;">${provisions}${moreNote}</ul>
+      <div class="policy-tags">${categoryTags}${deloitteTag}</div>
+      ${deloitteSection}
+      <div style="font-size:0.7rem;color:#aaa;margin-top:0.75rem;">Source: ${p.source}</div>
+    </div>`;
+}
+
+// ── Initial render ────────────────────────────────────────────
+applyFilters();
+
+</script>
+
+<!-- ── Chat Widget ───────────────────────────────────────────── -->
+<div class="cw" id="cw">
+  <button class="cw__bubble" id="cwBubble" aria-expanded="false" aria-label="Open carbon intelligence assistant">
+    <span class="cw__bubble-icon">◈</span>
+    <span class="cw__bubble-label">Ask Carbon AI</span>
+  </button>
+  <div class="cw__panel" id="cwPanel" role="dialog" aria-modal="true" aria-label="Carbon Intelligence Chat" aria-hidden="true">
+    <div class="cw__header">
+      <div class="cw__header-info">
+        <div class="cw__avatar">CI</div>
+        <div>
+          <div class="cw__name">Carbon Intelligence</div>
+          <div class="cw__status">
+            <span class="cw__dot"></span>
+            <span class="cw__subtitle">AI assistant · Informational only · Not a Deloitte service</span>
+          </div>
+        </div>
+      </div>
+      <button class="cw__close" id="cwClose" aria-label="Close chat">✕</button>
+    </div>
+    <div class="cw__messages" id="cwMessages"></div>
+    <div class="cw__suggestions" id="cwSuggestions"></div>
+    <div class="cw__footer">
+      <input type="text" class="cw__input" id="cwInput" placeholder="Ask about CCTS, policies, benchmarks…" autocomplete="off" maxlength="400" />
+      <button class="cw__send" id="cwSend" aria-label="Send message">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M14 8L2 2l2.5 6L2 14l12-6z" fill="currentColor"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+<script src="chat.js"></script>
+</body>
+</html>

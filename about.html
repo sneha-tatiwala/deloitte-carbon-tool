@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About & Methodology — Carbon Intelligence India</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="chat.css" />
+</head>
+<body>
+
+<!-- ── Navigation ───────────────────────────────────────────── -->
+<nav class="nav-bar">
+  <div style="max-width:1200px;margin:0 auto;padding:0 1.5rem;display:flex;align-items:center;gap:2rem;height:56px;">
+    <a href="index.html" class="nav-logo">Carbon Intelligence <span>India</span></a>
+    <div style="display:flex;gap:0.25rem;margin-left:auto;flex-wrap:wrap;">
+      <a href="index.html"          class="nav-link">CCTS Calculator</a>
+      <a href="policy-tracker.html" class="nav-link">Policy Tracker</a>
+      <a href="about.html"          class="nav-link active">About</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ── Prototype Notice ──────────────────────────────────────── -->
+<div style="background:#fffbf0;border-bottom:1px solid #e6d84a;padding:0.45rem 0;">
+  <div style="max-width:1200px;margin:0 auto;padding:0 1.5rem;font-size:0.77rem;color:#7a6500;display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;">
+    <span style="font-weight:700;white-space:nowrap;">Prototype only.</span>
+    This tool is not affiliated with or authorised by Deloitte Touche Tohmatsu Limited. Outputs are indicative only and do not constitute legal or compliance advice.
+  </div>
+</div>
+
+<!-- ── Page Hero ─────────────────────────────────────────────── -->
+<div class="page-hero">
+  <div style="max-width:1200px;margin:0 auto;padding:0 1.5rem;">
+    <div class="hero-badge">Methodology & Context</div>
+    <h1>About This Tool</h1>
+    <p>What this tool is, how it was built, what it does not do, and the data and methodology behind every output.</p>
+  </div>
+</div>
+
+<!-- ── Content ───────────────────────────────────────────────── -->
+<main style="max-width:900px;margin:0 auto;padding:2rem 1.5rem;">
+
+  <!-- What this is -->
+  <div class="card" style="margin-bottom:1.5rem;">
+    <p class="section-header">What This Tool Is</p>
+    <p style="font-size:0.9rem;line-height:1.7;margin-bottom:1rem;">
+      This is a <strong>prototype demonstration tool</strong> built to show what a client-facing CCTS compliance and carbon intelligence platform could look like for Deloitte India's Sustainability &amp; Climate Practice. It is not a Deloitte product. It was built independently to demonstrate the depth of research behind India's carbon market and to illustrate the kind of analytical tool that Deloitte's ESG advisory team could deploy with industrial clients ahead of the mid-2026 CCTS full trading launch.
+    </p>
+    <div class="note-box">
+      <strong>Framing:</strong> This is a candidate-built prototype, positioned as "here is what a tool like this could look like — and here is the analytical thinking behind it." It is not authorised by, affiliated with, or an official product of Deloitte Touche Tohmatsu.
+    </div>
+  </div>
+
+  <!-- What it does -->
+  <div class="card" style="margin-bottom:1.5rem;">
+    <p class="section-header">What It Does</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;" class="form-grid">
+      <div>
+        <div style="font-weight:700;font-size:0.88rem;margin-bottom:0.4rem;color:var(--green-dark);">✓  CCTS Compliance Calculator</div>
+        <p style="font-size:0.83rem;color:#555;line-height:1.55;">
+          Takes a company's sector, annual production, and emission intensity (or uses the sector average if unknown) and calculates: compliance status (over/under/at threshold), CCC surplus or deficit in tonnes CO₂e, financial exposure at three CCTS price scenarios (₹150, ₹250, ₹600/tCO₂e), sector peer benchmark, and Deloitte advisory recommendations mapped to each result.
+        </p>
+      </div>
+      <div>
+        <div style="font-weight:700;font-size:0.88rem;margin-bottom:0.4rem;color:var(--green-dark);">✓  Policy Intelligence Tracker</div>
+        <p style="font-size:0.83rem;color:#555;line-height:1.55;">
+          Structured, searchable, filterable database of 30+ India climate and environmental policies from 1972 to 2035 — historical foundations, the 2022–2024 legislative reform wave, active programs, and forthcoming commitments. Tagged by category, sector, status, and Deloitte advisory relevance.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- What it does NOT do -->
+  <div class="card" style="margin-bottom:1.5rem;border-left:4px solid var(--amber);">
+    <p class="section-header">Explicit Scope Boundaries</p>
+    <ul style="list-style:none;padding:0;margin:0;">
+      <li style="display:flex;gap:0.75rem;padding:0.5rem 0;border-bottom:1px solid var(--grey-100);font-size:0.85rem;line-height:1.5;">
+        <span style="color:var(--amber);font-weight:700;flex-shrink:0;">✗</span>
+        <span><strong>No real-time data.</strong> BRSR reports, BEE CCTS filings, and policy notifications are annual. This tool's data is static, sourced from research, and updated manually. It does not use a live scraper or database.</span>
+      </li>
+      <li style="display:flex;gap:0.75rem;padding:0.5rem 0;border-bottom:1px solid var(--grey-100);font-size:0.85rem;line-height:1.5;">
+        <span style="color:var(--amber);font-weight:700;flex-shrink:0;">✗</span>
+        <span><strong>No district-level data.</strong> Indian companies do not publicly report carbon emissions at facility or district level. This tool uses sector-level benchmarks and state-level policy data — which is what publicly available data actually supports.</span>
+      </li>
+      <li style="display:flex;gap:0.75rem;padding:0.5rem 0;border-bottom:1px solid var(--grey-100);font-size:0.85rem;line-height:1.5;">
+        <span style="color:var(--amber);font-weight:700;flex-shrink:0;">✗</span>
+        <span><strong>Not legally binding.</strong> Outputs are indicative only. Each obligated entity's actual CCTS target is set individually by MoEFCC against their own FY2023–24 baseline. This tool uses sector averages as proxies where individual baselines are unknown.</span>
+      </li>
+      <li style="display:flex;gap:0.75rem;padding:0.5rem 0;border-bottom:1px solid var(--grey-100);font-size:0.85rem;line-height:1.5;">
+        <span style="color:var(--amber);font-weight:700;flex-shrink:0;">✗</span>
+        <span><strong>No Deloitte client data.</strong> This tool does not display, imply, or reference any actual Deloitte client relationships. References to Deloitte's practice areas are based on publicly available information (press releases, published reports, LinkedIn).</span>
+      </li>
+      <li style="display:flex;gap:0.75rem;padding:0.5rem 0;font-size:0.85rem;line-height:1.5;">
+        <span style="color:var(--amber);font-weight:700;flex-shrink:0;">✗</span>
+        <span><strong>No paywalled news scraping.</strong> The policy tracker is sourced from open-access government sources only: PIB, MoEFCC, MNRE, BEE, PRS India, UNFCCC NDC Registry. A production version would automate these via scheduled scraping.</span>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Calculation Methodology -->
+  <div class="card" style="margin-bottom:1.5rem;">
+    <p class="section-header">CCTS Calculator Methodology</p>
+
+    <p style="font-size:0.88rem;line-height:1.7;margin-bottom:1rem;">
+      The calculation engine is implemented in Python (<code class="font-mono" style="background:var(--grey-100);padding:0.1rem 0.4rem;border-radius:3px;">calculator.py</code>) with 45 unit tests, and mirrored in JavaScript for the frontend (<code class="font-mono" style="background:var(--grey-100);padding:0.1rem 0.4rem;border-radius:3px;">data/calculator-data.js</code>). The Python module serves as the source of truth and will also power the Phase 2 Jupyter notebook analysis.
+    </p>
+    <div class="note-box" style="margin-bottom:1rem;">
+      <strong>Source code:</strong> The Python engine, sector data model, and full test suite (45 tests) are available at
+      <a href="https://github.com/sneha-tatiwala/deloitte-carbon-tool" style="color:var(--green-dark);font-weight:600;" target="_blank" rel="noopener">github.com/sneha-tatiwala/deloitte-carbon-tool</a>.
+      The repository includes <code style="background:var(--grey-100);padding:0.1rem 0.3rem;border-radius:3px;">calculator.py</code>, <code style="background:var(--grey-100);padding:0.1rem 0.3rem;border-radius:3px;">test_calculator.py</code>, and all data layer files.
+    </div>
+
+    <div style="background:var(--grey-50);border:1px solid var(--grey-300);border-radius:4px;padding:1rem;font-size:0.83rem;line-height:1.8;margin-bottom:1rem;">
+      <div style="font-weight:700;margin-bottom:0.5rem;">Step 1 — CCTS Target Intensity</div>
+      <code class="font-mono">ccts_target = sector_baseline × (1 − reduction_target_pct)</code><br/>
+      <span style="color:#666;">Where <em>sector_baseline</em> is the Indian industry average emission intensity for FY2023–24, and <em>reduction_target_pct</em> is the midpoint of BEE's published reduction range for that sector.</span>
+    </div>
+
+    <div style="background:var(--grey-50);border:1px solid var(--grey-300);border-radius:4px;padding:1rem;font-size:0.83rem;line-height:1.8;margin-bottom:1rem;">
+      <div style="font-weight:700;margin-bottom:0.5rem;">Step 2 — CCC Surplus or Deficit</div>
+      <code class="font-mono">ccc_delta = (actual_intensity − ccts_target) × annual_production</code><br/>
+      <span style="color:#666;">Positive = deficit (must buy CCCs). Negative = surplus (can sell CCCs). Units: tonnes CO₂e.</span>
+    </div>
+
+    <div style="background:var(--grey-50);border:1px solid var(--grey-300);border-radius:4px;padding:1rem;font-size:0.83rem;line-height:1.8;margin-bottom:1rem;">
+      <div style="font-weight:700;margin-bottom:0.5rem;">Step 3 — Financial Exposure</div>
+      <code class="font-mono">exposure_inr = ccc_delta × price_inr</code><br/>
+      <span style="color:#666;">Calculated at three price scenarios: ₹150 (floor), ₹250 (expected average), ₹600 (ceiling) per tCO₂e. Converted to USD at ₹84.5/USD — verify before financial decisions. All financial outputs are indicative only.</span>
+    </div>
+
+    <div style="background:var(--grey-50);border:1px solid var(--grey-300);border-radius:4px;padding:1rem;font-size:0.83rem;line-height:1.8;">
+      <div style="font-weight:700;margin-bottom:0.5rem;">Step 4 — Peer Benchmark Percentile</div>
+      <span style="color:#666;">Linear interpolation across four reference points: worst performer (assumed 40% above sector average), sector average (50th percentile), top quartile threshold (75th percentile), best-in-class (assumed 20% below top quartile). Gives an estimated sector percentile for the user's intensity. Methodology note included in every output.</span>
+    </div>
+  </div>
+
+  <!-- Sector data sources -->
+  <div class="card" style="margin-bottom:1.5rem;">
+    <p class="section-header">Sector Benchmark Data Sources</p>
+    <table class="data-table" style="font-size:0.8rem;">
+      <thead>
+        <tr>
+          <th>Sector</th>
+          <th>Target Notified?</th>
+          <th>Baseline Source</th>
+        </tr>
+      </thead>
+      <tbody id="sector-sources-table"></tbody>
+    </table>
+    <p style="font-size:0.75rem;color:#888;margin-top:0.75rem;">
+      * Sectors marked "Proxy" use a reduction range of 3.0%–6.0% consistent with the three officially notified sectors. BEE had not published individual targets for these sectors as of April 2026.
+    </p>
+  </div>
+
+  <!-- What Deloitte gains -->
+  <div class="card" style="margin-bottom:1.5rem;border-left:4px solid var(--green);">
+    <p class="section-header">What a Production Version Would Add</p>
+    <p style="font-size:0.85rem;line-height:1.7;margin-bottom:0.75rem;">
+      A production version deployed by Deloitte India would extend this prototype in three directions:
+    </p>
+    <ol style="padding-left:1.25rem;font-size:0.85rem;line-height:1.9;color:#444;">
+      <li><strong>Live data pipeline:</strong> Scheduled scraping of PIB, MoEFCC, BEE, and MNRE notifications to keep the policy tracker current. BRSR PDF extraction to populate company-level emission data for the top 1,000 listed companies.</li>
+      <li><strong>Company assessment engine:</strong> A decision-tree module (built in Python) that takes company name, sector, size, and listed status and outputs a full regulatory obligation checklist — CCTS coverage, BRSR tier, CAFE III applicability, NCAP exposure, TNFD biodiversity relevance — with Deloitte service recommendations mapped to each gap.</li>
+      <li><strong>Lead intelligence dashboard (internal Deloitte):</strong> A gated view for Deloitte's BD team showing CCTS-covered companies ranked by estimated compliance gap — i.e., the largest potential buyers of Deloitte's MRV and compliance advisory services.</li>
+    </ol>
+  </div>
+
+  <!-- Sources -->
+  <div class="card" style="margin-bottom:1.5rem;">
+    <p class="section-header">Primary Data Sources</p>
+    <ul style="list-style:none;padding:0;margin:0;font-size:0.83rem;line-height:1.9;color:#444;">
+      <li>📄 BEE Carbon Credit Trading Scheme Notification, June 2023</li>
+      <li>📄 MoEFCC CCTS Sector-Specific Emission Intensity Targets, FY2026</li>
+      <li>📄 India Climate &amp; Environment Policy Landscape Report, April 2026 (14-chapter research report)</li>
+      <li>📄 Carbon Footprint Trading in India: Mechanics, Markets, and the Role of Advisory Firms, April 2026</li>
+      <li>📄 UNFCCC India NDC Registry — First NDC (2015), Updated NDC (2022), 2035 Targets</li>
+      <li>📄 ICAP Carbon Action Partnership — Indian Carbon Market 2025</li>
+      <li>📄 Climate Bonds Initiative India Sustainable Debt Market Report 2024</li>
+      <li>📄 Climate Policy Initiative Green Finance Landscape India 2024</li>
+      <li>📄 IEA India Energy &amp; Emissions Data 2023–24</li>
+      <li>📄 WSA World Steel Association India GHG Benchmarks 2024</li>
+      <li>📄 CII Cement Sector GHG Benchmark Report 2024</li>
+      <li>📄 McKinsey Global Institute — Decarbonising India: Charting a Pathway for Sustainable Growth, October 2022</li>
+      <li>📄 PRS India Legislative Tracking — Environmental Laws Database</li>
+      <li>📄 PIB (Press Information Bureau) — Government of India press releases</li>
+      <li>📄 Prayas Energy Group — PAT Cycle III Analysis, 2024</li>
+      <li>📄 IEEFA — India Carbon Market Price Stability Analysis, 2024</li>
+      <li>📄 Climate Action Tracker — India Country Profile 2026</li>
+      <li>📄 CCPI 2026 — India Climate Change Performance Index</li>
+    </ul>
+  </div>
+
+  <!-- Disclaimer -->
+  <div class="disclaimer">
+    <strong>Disclaimer:</strong> This tool is a prototype demonstration built for portfolio and research purposes. It is not an official Deloitte product and is not affiliated with Deloitte Touche Tohmatsu Limited or any of its member firms. All outputs are indicative only and do not constitute legal, financial, regulatory, or compliance advice. Companies subject to CCTS obligations should consult a qualified professional for a verified compliance assessment. Emission intensity benchmarks are derived from published industry sources and represent sector averages — individual company baselines may differ materially.
+  </div>
+
+</main>
+
+<!-- ── Footer ────────────────────────────────────────────────── -->
+<footer class="site-footer">
+  <div style="max-width:1200px;margin:0 auto;padding:0 1.5rem;">
+    <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:1rem;">
+      <div>
+        <div style="color:var(--green);font-weight:700;font-size:0.9rem;margin-bottom:0.4rem;">Carbon Intelligence India</div>
+        <div>A prototype tool built for Deloitte India's CCTS advisory practice.</div>
+      </div>
+      <div style="text-align:right;">
+        <div style="margin-bottom:0.25rem;"><a href="index.html">CCTS Calculator</a></div>
+        <div><a href="policy-tracker.html">Policy Tracker</a></div>
+      </div>
+    </div>
+    <div style="border-top:1px solid #333;padding-top:1rem;">
+      Prototype demonstration only. Not for legal or compliance advice. Data current as of April 2026.
+    </div>
+  </div>
+</footer>
+
+<!-- ── Scripts ────────────────────────────────────────────────── -->
+<script src="data/sectors.js"></script>
+<script>
+// Populate sector sources table
+(function() {
+  const tbody = document.getElementById('sector-sources-table');
+  Object.values(SECTOR_DATA).forEach(s => {
+    tbody.innerHTML += `
+      <tr>
+        <td><strong>${s.name}</strong></td>
+        <td>${s.targetOfficiallyNotified
+          ? '<span style="color:var(--green-dark);font-weight:600;">✓ Official</span>'
+          : '<span style="color:var(--amber);font-weight:600;">⚠ Proxy*</span>'}</td>
+        <td style="font-size:0.75rem;color:#666;">${s.source}</td>
+      </tr>`;
+  });
+})();
+</script>
+
+<!-- ── Chat Widget ───────────────────────────────────────────── -->
+<div class="cw" id="cw">
+  <button class="cw__bubble" id="cwBubble" aria-expanded="false" aria-label="Open carbon intelligence assistant">
+    <span class="cw__bubble-icon">◈</span>
+    <span class="cw__bubble-label">Ask Carbon AI</span>
+  </button>
+  <div class="cw__panel" id="cwPanel" role="dialog" aria-modal="true" aria-label="Carbon Intelligence Chat" aria-hidden="true">
+    <div class="cw__header">
+      <div class="cw__header-info">
+        <div class="cw__avatar">CI</div>
+        <div>
+          <div class="cw__name">Carbon Intelligence</div>
+          <div class="cw__status">
+            <span class="cw__dot"></span>
+            <span class="cw__subtitle">AI assistant · Informational only · Not a Deloitte service</span>
+          </div>
+        </div>
+      </div>
+      <button class="cw__close" id="cwClose" aria-label="Close chat">✕</button>
+    </div>
+    <div class="cw__messages" id="cwMessages"></div>
+    <div class="cw__suggestions" id="cwSuggestions"></div>
+    <div class="cw__footer">
+      <input type="text" class="cw__input" id="cwInput" placeholder="Ask about CCTS, policies, benchmarks…" autocomplete="off" maxlength="400" />
+      <button class="cw__send" id="cwSend" aria-label="Send message">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M14 8L2 2l2.5 6L2 14l12-6z" fill="currentColor"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+<script src="chat.js"></script>
+</body>
+</html>

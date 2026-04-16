@@ -1,0 +1,21 @@
+# Dependencies
+node_modules/
+
+# Environment variables — never commit the API key
+.env
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+venv/
+
+# Internal research, feedback, and LaTeX drafts — not for public repo
+india-climate-policy-report/
+
+# macOS
+.DS_Store
+
+# Editor
+.vscode/
+.idea/
