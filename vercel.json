@@ -1,10 +1,5 @@
 {
   "version": 2,
   "buildCommand": "",
-  "installCommand": "npm install",
-  "functions": {
-    "api/chat.js": {
-      "runtime": "nodejs20.x"
-    }
-  }
+  "installCommand": "npm install"
 }
