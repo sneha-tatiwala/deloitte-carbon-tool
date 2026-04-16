@@ -277,7 +277,7 @@ module.exports = async (req, res) => {
       headers: {
         'Authorization': `Bearer ${apiKey}`,
         'Content-Type': 'application/json',
-        'HTTP-Referer': 'http://localhost:3001',
+        'HTTP-Referer': 'https://carbonintel.snehatatiwala.com',
         'X-Title': 'Deloitte India Carbon Intelligence',
       },
       body: JSON.stringify({
