@@ -42,7 +42,7 @@
   <div style="max-width:1200px;margin:0 auto;padding:0 1.5rem;">
     <div class="hero-badge">Policy Intelligence</div>
     <h1>India Climate & Environment Policy Tracker</h1>
-    <p>Complete database of India's climate and environmental legislation — historical foundations to forthcoming commitments. Filtered for CCTS, BRSR, and Deloitte advisory relevance.</p>
+    <p>Complete database of India's climate and environmental legislation — historical foundations to forthcoming commitments. Filter by sector, category, status, or advisory opportunity.</p>
   </div>
 </div>
 
@@ -83,10 +83,26 @@
 
       <span style="width:1px;height:20px;background:var(--grey-300);margin:0 0.25rem;"></span>
 
-      <!-- Deloitte relevance toggle -->
-      <label class="filter-chip" id="deloitte-filter-btn" style="cursor:pointer;">
-        <input type="checkbox" id="deloitte-only" onchange="applyFilters()" style="accent-color:var(--green);width:12px;height:12px;" />
-        Deloitte Relevant Only
+      <!-- Sector filter -->
+      <select id="sector-filter" onchange="applyFilters()" style="font-size:0.78rem;padding:0.3rem 0.6rem;border:1px solid var(--grey-300);border-radius:4px;background:#fff;color:#333;cursor:pointer;">
+        <option value="">All Sectors</option>
+        <option value="cement">Cement</option>
+        <option value="iron_steel">Iron &amp; Steel</option>
+        <option value="aluminium">Aluminium</option>
+        <option value="chlor_alkali">Chlor-Alkali</option>
+        <option value="petroleum_refining">Petroleum Refining</option>
+        <option value="petrochemicals">Petrochemicals</option>
+        <option value="textiles">Textiles</option>
+        <option value="fertilisers">Fertilisers</option>
+        <option value="pulp_paper">Pulp &amp; Paper</option>
+      </select>
+
+      <span style="width:1px;height:20px;background:var(--grey-300);margin:0 0.25rem;"></span>
+
+      <!-- Advisory opportunity toggle -->
+      <label class="filter-chip" id="advisory-filter-btn" style="cursor:pointer;">
+        <input type="checkbox" id="advisory-only" onchange="applyFilters()" style="accent-color:var(--green);width:12px;height:12px;" />
+        Advisory Opportunity
       </label>
     </div>
   </div>
@@ -110,8 +126,8 @@
       <div class="stat-label">Forthcoming</div>
     </div>
     <div class="stat-box">
-      <div class="stat-value" id="stat-deloitte">—</div>
-      <div class="stat-label">Deloitte-Relevant</div>
+      <div class="stat-value" id="stat-advisory">—</div>
+      <div class="stat-label">Advisory Opportunities</div>
     </div>
   </div>
 
@@ -144,7 +160,7 @@
     <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:1rem;">
       <div>
         <div style="color:var(--green);font-weight:700;font-size:0.9rem;margin-bottom:0.4rem;">Carbon Intelligence India</div>
-        <div>A prototype tool built for Deloitte India's CCTS advisory practice.</div>
+        <div>A prototype carbon compliance and policy intelligence tool for India's advisory market.</div>
       </div>
       <div style="text-align:right;">
         <div style="margin-bottom:0.25rem;"><a href="index.html">CCTS Calculator</a></div>
@@ -183,7 +199,7 @@ const activeFilters = { status: '', category: '', sector: '' };
   document.getElementById('stat-total').textContent      = POLICIES.length;
   document.getElementById('stat-active').textContent     = POLICIES.filter(p => p.status === 'active').length;
   document.getElementById('stat-forthcoming').textContent = POLICIES.filter(p => p.status === 'forthcoming').length;
-  document.getElementById('stat-deloitte').textContent   = POLICIES.filter(p => p.deloitteRelevance).length;
+  document.getElementById('stat-advisory').textContent   = POLICIES.filter(p => p.advisoryRelevance).length;
 })();
 
 // ── URL param: pre-filter by sector ──────────────────────────
@@ -209,7 +225,8 @@ function resetFilters() {
   activeFilters.category = '';
   activeFilters.sector = '';
   document.getElementById('search-input').value = '';
-  document.getElementById('deloitte-only').checked = false;
+  document.getElementById('advisory-only').checked = false;
+  document.getElementById('sector-filter').value = '';
   document.querySelectorAll('.filter-chip[data-filter]').forEach(b => {
     b.classList.remove('active');
     if (b.dataset.value === '') b.classList.add('active');
@@ -219,14 +236,17 @@ function resetFilters() {
 
 function applyFilters() {
   const keyword       = document.getElementById('search-input').value.trim();
-  const deloitteOnly  = document.getElementById('deloitte-only').checked;
+  const advisoryOnly  = document.getElementById('advisory-only').checked;
+  const sectorFilter  = document.getElementById('sector-filter').value;
+  if (sectorFilter) activeFilters.sector = sectorFilter;
+  else if (!activeFilters.sector) activeFilters.sector = '';
 
   const filtered = filterPolicies({
     category: activeFilters.category || null,
     status:   activeFilters.status   || null,
-    sector:   activeFilters.sector   || null,
+    sector:   sectorFilter || activeFilters.sector || null,
     keyword,
-  }).filter(p => !deloitteOnly || p.deloitteRelevance);
+  }).filter(p => !advisoryOnly || p.advisoryRelevance);
 
   renderGrid(filtered);
 
@@ -259,19 +279,19 @@ function renderGrid(policies) {
 function buildPolicyCard(p) {
   const statusClass  = `status-${p.status}`;
   const statusLabel  = p.status === 'forthcoming' ? 'Forthcoming' : p.status === 'active' ? 'Active' : 'Historical';
-  const deloitteClass = p.deloitteRelevance ? 'deloitte-relevant' : '';
+  const advisoryClass = p.advisoryRelevance ? 'advisory-relevant' : '';
 
   const categoryTags = p.categories.map(c =>
     `<span class="policy-tag">${c}</span>`).join('');
 
-  const deloitteTag = p.deloitteRelevance
-    ? `<span class="policy-tag deloitte">Deloitte Relevant</span>`
+  const advisoryTag = p.advisoryRelevance
+    ? `<span class="policy-tag deloitte">Advisory Opportunity</span>`
     : '';
 
-  const deloitteSection = p.deloitteRelevance
+  const advisorySection = p.advisoryRelevance
     ? `<div style="margin-top:0.75rem;padding-top:0.75rem;border-top:1px solid var(--grey-100);">
-        <div style="font-size:0.7rem;font-weight:700;color:var(--green-dark);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:0.25rem;">Deloitte Relevance</div>
-        <div style="font-size:0.8rem;color:#444;line-height:1.45;">${p.deloitteRelevance}</div>
+        <div style="font-size:0.7rem;font-weight:700;color:var(--green-dark);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:0.25rem;">Advisory Opportunity</div>
+        <div style="font-size:0.8rem;color:#444;line-height:1.45;">${p.advisoryRelevance}</div>
        </div>`
     : '';
 
@@ -283,7 +303,7 @@ function buildPolicyCard(p) {
   const moreNote  = moreCount > 0 ? `<li style="font-size:0.75rem;color:#888;list-style:none;margin-top:0.25rem;">+${moreCount} more provisions</li>` : '';
 
   return `
-    <div class="policy-card ${deloitteClass}">
+    <div class="policy-card ${advisoryClass}">
       <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:0.5rem;margin-bottom:0.5rem;">
         <div>
           <span class="policy-year-badge">${p.year}</span>
@@ -293,8 +313,8 @@ function buildPolicyCard(p) {
       <div class="policy-title">${p.title}</div>
       <div class="policy-summary">${p.summary}</div>
       <ul style="padding-left:1rem;margin:0 0 0.75rem;">${provisions}${moreNote}</ul>
-      <div class="policy-tags">${categoryTags}${deloitteTag}</div>
-      ${deloitteSection}
+      <div class="policy-tags">${categoryTags}${advisoryTag}</div>
+      ${advisorySection}
       <div style="font-size:0.7rem;color:#aaa;margin-top:0.75rem;">Source: ${p.source}</div>
     </div>`;
 }
@@ -318,13 +338,16 @@ applyFilters();
           <div class="cw__name">Carbon Intelligence</div>
           <div class="cw__status">
             <span class="cw__dot"></span>
-            <span class="cw__subtitle">AI assistant · Informational only · Not a Deloitte service</span>
+            <span class="cw__subtitle">AI assistant · Informational only</span>
           </div>
         </div>
       </div>
       <button class="cw__close" id="cwClose" aria-label="Close chat">✕</button>
     </div>
     <div class="cw__messages" id="cwMessages"></div>
+    <div style="font-size:0.72rem;color:#666;padding:0.5rem 0.85rem 0;line-height:1.4;border-top:1px solid #f0f0f0;">
+      For compliance calculations, use the <a href="index.html" style="color:#046A38;">CCTS Calculator</a>.
+    </div>
     <div class="cw__suggestions" id="cwSuggestions"></div>
     <div class="cw__footer">
       <input type="text" class="cw__input" id="cwInput" placeholder="Ask about CCTS, policies, benchmarks…" autocomplete="off" maxlength="400" />

@@ -1,5 +1,5 @@
 /* =============================================
-   CHAT WIDGET — Deloitte Carbon Intelligence
+   CHAT WIDGET — Carbon Intelligence India
    open → type → send → typing indicator →
    response → input ready → close → reopen → repeat
    ============================================= */
@@ -185,7 +185,7 @@
       greeted = true;
       setTimeout(() => {
         appendMessage('assistant',
-          'This tool covers India\'s CCTS compliance mechanics, the policy database, carbon price signals, sector benchmarks, and Deloitte\'s advisory services in this space. What do you want to know?'
+          'This tool covers India\'s CCTS compliance mechanics, the policy database, carbon price signals, and sector benchmarks. What do you want to know?'
         );
       }, 320);
     }

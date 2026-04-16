@@ -446,7 +446,7 @@ body {
   border-color: var(--green);
 }
 
-.policy-card.deloitte-relevant {
+.policy-card.advisory-relevant {
   border-left: 4px solid var(--green);
 }
 

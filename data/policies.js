@@ -5,7 +5,7 @@
  *
  * Each policy object:
  *   id, title, year, effectiveYear, status, categories[], sectors[],
- *   summary, keyProvisions[], deloitteRelevance (null | string),
+ *   summary, keyProvisions[], advisoryRelevance (null | string),
  *   source
  */
 
@@ -28,7 +28,7 @@ const POLICIES = [
       "Created framework for Tiger Reserves and Project Tiger (1973)",
       "Amended 2022 to add provisions for invasive species and transboundary species management",
     ],
-    deloitteRelevance: "TNFD biodiversity disclosure framework (expected India alignment 2029) will require companies to assess operations near protected areas designated under this Act.",
+    advisoryRelevance: "TNFD biodiversity disclosure framework (expected India alignment 2029) will require companies to assess operations near protected areas designated under this Act.",
     source: "Parliament of India; MoEFCC Wildlife Division",
   },
   {
@@ -46,7 +46,7 @@ const POLICIES = [
       "Standards for effluent discharge into water bodies",
       "Amended 2024 — see Water Amendment Act 2024",
     ],
-    deloitteRelevance: null,
+    advisoryRelevance: null,
     source: "Parliament of India; PRS India Legislative Tracking",
   },
   {
@@ -63,7 +63,7 @@ const POLICIES = [
       "Compensatory afforestation mandatory for diversions approved",
       "Amended 2023 — expanded permissible activities (see Forest Amendment 2023)",
     ],
-    deloitteRelevance: "Forest-zone operations create ESG risk exposure. BRSR requires biodiversity impact disclosure for top 500 listed companies near protected areas.",
+    advisoryRelevance: "Forest-zone operations create ESG risk exposure. BRSR requires biodiversity impact disclosure for top 500 listed companies near protected areas.",
     source: "Parliament of India; MoEFCC Forest Division",
   },
   {
@@ -80,7 +80,7 @@ const POLICIES = [
       "Industrial units require consent from State PCBs",
       "Enables National Clean Air Programme (NCAP) enforcement",
     ],
-    deloitteRelevance: null,
+    advisoryRelevance: null,
     source: "Parliament of India; CPCB",
   },
   {
@@ -98,7 +98,7 @@ const POLICIES = [
       "Hazardous waste management rules notified under EPA",
       "Environment courts and NGT (National Green Tribunal) operate under EPA framework",
     ],
-    deloitteRelevance: "EIA and environmental clearance obligations are key compliance areas for Deloitte's ESG advisory clients in infrastructure, mining, and energy sectors.",
+    advisoryRelevance: "EIA and environmental clearance obligations are key compliance areas for Deloitte's ESG advisory clients in infrastructure, mining, and energy sectors.",
     source: "Parliament of India; MoEFCC",
   },
   {
@@ -117,7 +117,7 @@ const POLICIES = [
       "Energy Conservation Building Code (ECBC) authority",
       "Amended 2022 — created CCTS, RPO mandates, vehicle/vessel scope",
     ],
-    deloitteRelevance: "BEE is Deloitte's primary regulatory counterpart for CCTS compliance advisory and MRV verification work.",
+    advisoryRelevance: "BEE is Deloitte's primary regulatory counterpart for CCTS compliance advisory and MRV verification work.",
     source: "Parliament of India; BEE Annual Report 2024",
   },
   {
@@ -135,7 +135,7 @@ const POLICIES = [
       "Biodiversity Management Committees at local government level",
       "Amended 2023 — streamlined access for Indian researchers and traditional medicine systems",
     ],
-    deloitteRelevance: "TNFD-aligned biodiversity disclosures will require companies to assess biological resource dependencies. Deloitte's nature-based solutions practice.",
+    advisoryRelevance: "TNFD-aligned biodiversity disclosures will require companies to assess biological resource dependencies. Deloitte's nature-based solutions practice.",
     source: "Parliament of India; National Biodiversity Authority",
   },
 
@@ -158,7 +158,7 @@ const POLICIES = [
       "National Mission on Sustainable Agriculture — climate-resilient varieties",
       "Five further missions on habitat, Himalayan ecosystem, strategic knowledge",
     ],
-    deloitteRelevance: "NAPCC missions create sustained government procurement pipelines across all Deloitte sustainability service areas.",
+    advisoryRelevance: "NAPCC missions create sustained government procurement pipelines across all Deloitte sustainability service areas.",
     source: "PMO India; MoEFCC NAPCC Document June 2008",
   },
   {
@@ -178,7 +178,7 @@ const POLICIES = [
       "PAT Cycle III: chronic oversupply; all trades at floor ₹2,165/ESCert — key design flaw",
       "69 lakh ESCerts remain unretired — potential CCTS price suppression risk",
     ],
-    deloitteRelevance: "ESCert overhang is a key risk for CCTS price formation at launch. Deloitte's CCTS advisory practice must track BEE's transition handling.",
+    advisoryRelevance: "ESCert overhang is a key risk for CCTS price formation at launch. Deloitte's CCTS advisory practice must track BEE's transition handling.",
     source: "BEE PAT Scheme Documentation; Prayas Energy Group PAT Analysis 2024",
   },
   {
@@ -197,7 +197,7 @@ const POLICIES = [
       "No absolute emission reduction target — intensity-based only",
       "CBDR (Common But Differentiated Responsibilities) principle — India insists on development rights",
     ],
-    deloitteRelevance: "NDC targets are the policy anchor for all CCTS, BRSR, and renewable energy advisory work.",
+    advisoryRelevance: "NDC targets are the policy anchor for all CCTS, BRSR, and renewable energy advisory work.",
     source: "UNFCCC NDC Registry; MoEFCC",
   },
   {
@@ -216,7 +216,7 @@ const POLICIES = [
       "Namami Gange integration for river-adjacent city air quality",
       "Source apportionment studies mandated for all NCAP cities",
     ],
-    deloitteRelevance: "131-city NCAP represents a sustained government procurement pipeline for monitoring, industrial efficiency, and EV infrastructure advisory — Recommendation 4 in India Climate Policy Report.",
+    advisoryRelevance: "131-city NCAP represents a sustained government procurement pipeline for monitoring, industrial efficiency, and EV infrastructure advisory — Recommendation 4 in India Climate Policy Report.",
     source: "MoEFCC NCAP Notification January 2019; PIB",
   },
   {
@@ -233,7 +233,7 @@ const POLICIES = [
       "Component B: Standalone solar pumps — 942,000 installations",
       "Component C: Grid-connected pump solarisation — 1.099 million installations",
     ],
-    deloitteRelevance: null,
+    advisoryRelevance: null,
     source: "MNRE PM-KUSUM Progress Report November 2025",
   },
   {
@@ -253,7 +253,7 @@ const POLICIES = [
       "Net-zero emissions by 2070",
       "COP26: India changed 'coal phase-out' to 'phase-down' in Glasgow text",
     ],
-    deloitteRelevance: "Panchamrit targets define the policy environment for all Deloitte sustainability advisory engagements in India through 2030.",
+    advisoryRelevance: "Panchamrit targets define the policy environment for all Deloitte sustainability advisory engagements in India through 2030.",
     source: "PIB COP26 Press Release November 2021; UNFCCC NDC 2022",
   },
 
@@ -275,7 +275,7 @@ const POLICIES = [
       "Extended coverage to vehicles (Motor Vehicles Act 1988) and vessels",
       "Penalties increased to INR 10 lakh per failure per day",
     ],
-    deloitteRelevance: "This Act created the CCTS — the primary regulatory driver for Deloitte India's carbon advisory, MRV, and BRSR assurance practices.",
+    advisoryRelevance: "This Act created the CCTS — the primary regulatory driver for Deloitte India's carbon advisory, MRV, and BRSR assurance practices.",
     source: "Parliament of India; Gazette of India; BEE",
   },
   {
@@ -294,7 +294,7 @@ const POLICIES = [
       "Net-zero by 2070 (formalised)",
       "LIFE (Lifestyle for Environment) mass movement added",
     ],
-    deloitteRelevance: "NDC 2022 targets define CCTS intensity baselines and BRSR disclosure scope through 2030.",
+    advisoryRelevance: "NDC 2022 targets define CCTS intensity baselines and BRSR disclosure scope through 2030.",
     source: "UNFCCC NDC Registry August 2022; MoEFCC",
   },
   {
@@ -316,7 +316,7 @@ const POLICIES = [
       "Offset mechanism: non-obligated entities can earn CCCs via verified reductions",
       "Full trading launch: mid-2026",
     ],
-    deloitteRelevance: "CCTS is the #1 strategic priority for Deloitte India's sustainability practice. MRV verification, compliance advisory, and CCC trading strategy are immediate service opportunities.",
+    advisoryRelevance: "CCTS is the #1 strategic priority for Deloitte India's sustainability practice. MRV verification, compliance advisory, and CCC trading strategy are immediate service opportunities.",
     source: "BEE CCTS Notification June 2023; MoEFCC; ICAP Carbon Action Partnership 2025",
   },
   {
@@ -336,7 +336,7 @@ const POLICIES = [
       "First commercial plant: GAIL, Madhya Pradesh (May 2024) — 4.3 tonnes/day",
       "Cost target: ~€1.37/kg by 2030 (from current USD 4–6/kg)",
     ],
-    deloitteRelevance: "Green hydrogen advisory is a Phase 2 (2027–2028) service opportunity once costs approach commercial viability. Deloitte's green hydrogen export advisory practice.",
+    advisoryRelevance: "Green hydrogen advisory is a Phase 2 (2027–2028) service opportunity once costs approach commercial viability. Deloitte's green hydrogen export advisory practice.",
     source: "MNRE National Green Hydrogen Mission January 2023; PIB",
   },
   {
@@ -355,7 +355,7 @@ const POLICIES = [
       "Impact zone: 197,159 sq km — 27.62% of India's forest area",
       "Most exposed states: Odisha, Karnataka, Maharashtra, Chhattisgarh, Madhya Pradesh",
     ],
-    deloitteRelevance: "ESG-sensitive investors must track forest-zone operations in the five most-exposed states. BRSR biodiversity disclosure requirements apply to companies near affected areas.",
+    advisoryRelevance: "ESG-sensitive investors must track forest-zone operations in the five most-exposed states. BRSR biodiversity disclosure requirements apply to companies near affected areas.",
     source: "Parliament of India; MoEFCC; PRS India Legislative Analysis 2023",
   },
   {
@@ -373,7 +373,7 @@ const POLICIES = [
       "Updated governance of Biodiversity Management Committees",
       "Decriminalised certain offences — civil penalties replacing criminal",
     ],
-    deloitteRelevance: "Nature-based solutions and biodiversity credit markets intersect with this Act. TNFD alignment (2029) will require companies to assess biological resource dependencies.",
+    advisoryRelevance: "Nature-based solutions and biodiversity credit markets intersect with this Act. TNFD alignment (2029) will require companies to assess biological resource dependencies.",
     source: "Parliament of India; National Biodiversity Authority October 2024",
   },
   {
@@ -391,7 +391,7 @@ const POLICIES = [
       "Progress (Dec 2025): 5.79M applications; 239,000 installations; 7 GW capacity",
       "Disbursement bottleneck — only 2.4% installation rate despite strong demand",
     ],
-    deloitteRelevance: null,
+    advisoryRelevance: null,
     source: "MNRE PM Surya Ghar Progress Report December 2025; PIB",
   },
   {
@@ -409,7 +409,7 @@ const POLICIES = [
       "Streamlined enforcement — faster penalty imposition without court proceedings",
       "Initial applicability: Himachal Pradesh, Rajasthan, UTs",
     ],
-    deloitteRelevance: "Environmental compliance advisory — updated penalty structure changes risk calculus for industrial clients in initial states.",
+    advisoryRelevance: "Environmental compliance advisory — updated penalty structure changes risk calculus for industrial clients in initial states.",
     source: "Parliament of India; Rajya Sabha February 2024; PRS India",
   },
   {
@@ -427,7 +427,7 @@ const POLICIES = [
       "Links mangrove restoration to carbon sink creation and coastal livelihood support",
       "Contributes to India's NDC carbon sink targets",
     ],
-    deloitteRelevance: "Nature-based solutions (NBS) and biodiversity credits — mangrove restoration projects are eligible for voluntary carbon credit generation.",
+    advisoryRelevance: "Nature-based solutions (NBS) and biodiversity credits — mangrove restoration projects are eligible for voluntary carbon credit generation.",
     source: "MoEFCC MISHTI Progress Report April 2026; PIB",
   },
   {
@@ -446,7 +446,7 @@ const POLICIES = [
       "Anti-greenwashing 'Dos and Don'ts' guidelines (February 2023) now supplemented",
       "Alignment with ICMA Green Bond Principles and Climate Bonds Standard",
     ],
-    deloitteRelevance: "Green bond structuring, verification, and second-party opinion advisory. India's GSS+ debt market = USD 55.9B (186% growth since 2021).",
+    advisoryRelevance: "Green bond structuring, verification, and second-party opinion advisory. India's GSS+ debt market = USD 55.9B (186% growth since 2021).",
     source: "SEBI Circular December 2024; Climate Bonds Initiative India Sustainable Debt Report 2024",
   },
 
@@ -468,7 +468,7 @@ const POLICIES = [
       "750+ ACVAs needed — structural capacity gap at launch",
       "Article 6 linkage discussions expected to begin post-launch",
     ],
-    deloitteRelevance: "Highest-priority near-term opportunity. Early ACVA accreditation and CCC trading advisory positioning before the market opens.",
+    advisoryRelevance: "Highest-priority near-term opportunity. Early ACVA accreditation and CCC trading advisory positioning before the market opens.",
     source: "BEE CCTS Roadmap 2023; ICAP Carbon Action Partnership 2025",
   },
   {
@@ -485,7 +485,7 @@ const POLICIES = [
       "60% of installed power capacity from non-fossil sources by 2035",
       "Additional 3.5–4.0 billion tCO₂e carbon sink by 2035",
     ],
-    deloitteRelevance: "2035 targets will require tightening of CCTS intensity thresholds in successive compliance periods — underpins long-term advisory demand.",
+    advisoryRelevance: "2035 targets will require tightening of CCTS intensity thresholds in successive compliance periods — underpins long-term advisory demand.",
     source: "UNFCCC NDC Registry 2026; MoEFCC; Down to Earth March 2026",
   },
   {
@@ -504,7 +504,7 @@ const POLICIES = [
       "EV production must scale to ~1.3 million units (20% of passenger vehicles) by 2030",
       "S&P Global forecast: CAFE III will accelerate EV adoption curve by 3–4 years",
     ],
-    deloitteRelevance: "Automotive sector clients face material capital reallocation requirement. Deloitte's decarbonisation roadmap and transition strategy advisory.",
+    advisoryRelevance: "Automotive sector clients face material capital reallocation requirement. Deloitte's decarbonisation roadmap and transition strategy advisory.",
     source: "Ministry of Road Transport & Highways CAFE III Notification; S&P Global Mobility India 2025",
   },
   {
@@ -523,7 +523,7 @@ const POLICIES = [
       "Biodiversity impact disclosure: top 500 companies near protected areas",
       "Third-party assurance required for BRSR Core disclosures",
     ],
-    deloitteRelevance: "BRSR Scope 3 advisory is an immediate revenue opportunity. Deloitte's Emissions Calculation Center (ECC) automates Scope 3 measurement across complex supply chains.",
+    advisoryRelevance: "BRSR Scope 3 advisory is an immediate revenue opportunity. Deloitte's Emissions Calculation Center (ECC) automates Scope 3 measurement across complex supply chains.",
     source: "SEBI BRSR Framework; SEBI Circular FY2025–26 Mandate",
   },
   {
@@ -541,7 +541,7 @@ const POLICIES = [
       "India's 1,014 protected areas and 98 Ramsar wetlands create significant exposure",
       "Forest (Conservation) Amendment 2023 impact zone will be material disclosure item",
     ],
-    deloitteRelevance: "Nature-based solutions practice and biodiversity finance advisory — Phase 3 service opportunity per the India Climate Policy Report implementation roadmap.",
+    advisoryRelevance: "Nature-based solutions practice and biodiversity finance advisory — Phase 3 service opportunity per the India Climate Policy Report implementation roadmap.",
     source: "TNFD Framework (September 2023); Climate Policy Report April 2026 Implementation Roadmap",
   },
   {
@@ -560,7 +560,7 @@ const POLICIES = [
       "Corresponding adjustment mechanism prevents double-counting between NDC and exports",
       "India accounted for 17% of global voluntary carbon credit supply (2010–2022) — export potential is large",
     ],
-    deloitteRelevance: "Article 6 advisory is a Phase 2 opportunity (2027+). Deloitte can advise on ITMO project development, corresponding adjustment calculations, and export transaction structuring.",
+    advisoryRelevance: "Article 6 advisory is a Phase 2 opportunity (2027+). Deloitte can advise on ITMO project development, corresponding adjustment calculations, and export transaction structuring.",
     source: "PIB Article 6.2 Activities Notification 2023; UNFCCC Article 6 Registry",
   },
   {
@@ -580,7 +580,7 @@ const POLICIES = [
       "Record additions FY2024–25: 29.52 GW — highest in India's history",
       "PLI scheme for domestic solar module manufacturing: 100 GW capacity target",
     ],
-    deloitteRelevance: "Renewable project finance advisory, green bond structuring, and BRSR assurance for renewable energy companies are high-volume service opportunities.",
+    advisoryRelevance: "Renewable project finance advisory, green bond structuring, and BRSR assurance for renewable energy companies are high-volume service opportunities.",
     source: "MNRE 500 GW Target Documentation; PIB January 2026",
   },
   {
@@ -599,7 +599,7 @@ const POLICIES = [
       "CCUS hubs identified: Gujarat, Odisha, Rajasthan, Maharashtra, Andhra Pradesh",
       "McKinsey estimate: USD 12.1 trillion (5.9% of GDP) required by 2050 for accelerated scenario",
     ],
-    deloitteRelevance: "Long-term anchor for all Deloitte sustainability advisory work. Transition risk assessment for financial institutions is the near-term service derived from this commitment.",
+    advisoryRelevance: "Long-term anchor for all Deloitte sustainability advisory work. Transition risk assessment for financial institutions is the near-term service derived from this commitment.",
     source: "UNFCCC NDC 2022; PMO COP26 Statement; McKinsey Decarbonising India 2022",
   },
 ];

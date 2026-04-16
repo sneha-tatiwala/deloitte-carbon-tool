@@ -41,7 +41,7 @@
 <div style="background:#fffbf0;border-bottom:1px solid #e6d84a;padding:0.45rem 0;">
   <div style="max-width:1200px;margin:0 auto;padding:0 1.5rem;font-size:0.77rem;color:#7a6500;display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;">
     <span style="font-weight:700;white-space:nowrap;">Prototype only.</span>
-    This tool is not affiliated with or authorised by Deloitte Touche Tohmatsu Limited or any of its member firms. Outputs are indicative only and do not constitute legal, financial, or compliance advice.
+    Prototype only. Outputs are indicative and do not constitute legal, financial, or compliance advice.
     <a href="about.html" style="color:#7a6500;font-weight:600;margin-left:auto;white-space:nowrap;text-decoration:underline;">Full disclaimer →</a>
   </div>
 </div>
@@ -149,15 +149,15 @@
 
   </div><!-- end grid -->
 
-  <!-- Deloitte CTA strip -->
+  <!-- CTA strip -->
   <div class="card card-dark" style="margin-top:2.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;">
     <div>
-      <div style="font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--green);font-weight:700;margin-bottom:0.3rem;">Built for India's CCTS Advisory Market</div>
-      <div style="font-size:1rem;font-weight:700;color:#fff;">This prototype demonstrates what a client-facing compliance tool could look like for a firm like Deloitte.</div>
+      <div style="font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--green);font-weight:700;margin-bottom:0.3rem;">Built for India's Carbon Advisory Market</div>
+      <div style="font-size:1rem;font-weight:700;color:#fff;">A prototype CCTS compliance and policy intelligence platform for industrial advisors and their clients.</div>
       <div style="font-size:0.83rem;color:#aaa;margin-top:0.25rem;">MRV setup · CCC trading strategy · BRSR assurance · Decarbonisation roadmaps</div>
     </div>
     <a href="about.html" class="btn-primary" style="white-space:nowrap;">
-      Methodology & Services →
+      Methodology & Scope →
     </a>
   </div>
 
@@ -169,7 +169,7 @@
     <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:1rem;">
       <div>
         <div style="color:var(--green);font-weight:700;font-size:0.9rem;margin-bottom:0.4rem;">Carbon Intelligence India</div>
-        <div>A prototype tool built for Deloitte India's CCTS advisory practice.</div>
+        <div>A prototype carbon compliance and policy intelligence tool for India's advisory market.</div>
       </div>
       <div style="text-align:right;">
         <div style="margin-bottom:0.25rem;"><a href="policy-tracker.html">Policy Tracker</a></div>
@@ -385,7 +385,7 @@ function renderResults(r) {
     <!-- Deloitte Recommendations — collapsed by default -->
     <div style="margin-bottom:1.25rem;">
       <button class="btn-secondary" style="width:100%;display:flex;justify-content:space-between;align-items:center;padding:0.7rem 1rem;" onclick="toggleRecs(this)">
-        <span>Deloitte Advisory Recommendations (${r.recommendations.length})</span>
+        <span>Advisory Actions (${r.recommendations.length})</span>
         <span style="font-size:0.78rem;opacity:0.7;">▼ Show</span>
       </button>
       <div style="display:none;margin-top:0.75rem;">
@@ -454,7 +454,7 @@ function renderBenchmarkRow(label, value, maxValue, barClass) {
           <div class="cw__name">Carbon Intelligence</div>
           <div class="cw__status">
             <span class="cw__dot"></span>
-            <span class="cw__subtitle">AI assistant · Informational only · Not a Deloitte service</span>
+            <span class="cw__subtitle">AI assistant · Informational only</span>
           </div>
         </div>
       </div>
@@ -463,6 +463,11 @@ function renderBenchmarkRow(label, value, maxValue, barClass) {
 
     <!-- Messages -->
     <div class="cw__messages" id="cwMessages"></div>
+
+    <!-- Calculator redirect note -->
+    <div style="font-size:0.72rem;color:#666;padding:0.5rem 0.85rem 0;line-height:1.4;border-top:1px solid #f0f0f0;">
+      For actual compliance calculations, use the calculator above.
+    </div>
 
     <!-- Suggested questions (hidden after first send) -->
     <div class="cw__suggestions" id="cwSuggestions"></div>
