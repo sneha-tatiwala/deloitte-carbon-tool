@@ -1,14 +1,10 @@
 {
   "version": 2,
-  "builds": [
-    { "src": "api/chat.js", "use": "@vercel/node" },
-    { "src": "*.html",      "use": "@vercel/static" },
-    { "src": "*.css",       "use": "@vercel/static" },
-    { "src": "*.js",        "use": "@vercel/static", "config": { "exclude": ["server.js"] } },
-    { "src": "data/**",     "use": "@vercel/static" }
-  ],
-  "routes": [
-    { "src": "/api/chat", "dest": "/api/chat.js" },
-    { "src": "/(.*)",     "dest": "/$1"           }
-  ]
+  "framework": null,
+  "outputDirectory": ".",
+  "functions": {
+    "api/chat.js": {
+      "runtime": "nodejs20.x"
+    }
+  }
 }
