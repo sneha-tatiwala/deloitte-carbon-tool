@@ -252,13 +252,35 @@ If a user asks how to use the calculator: tell them to select their sector from 
 If a user asks what "emission intensity" means: it is greenhouse gas emissions per unit of output. For cement, it is tCO2e per tonne of cement produced. For steel, it is tCO2e per tonne of crude steel. The calculator accepts any non-negative value.
 `.trim();
 
+// ── Body parser helper (Vercel may pass body as raw string or Buffer) ──────────
+async function parseBody(req) {
+  if (req.body && typeof req.body === 'object' && !Buffer.isBuffer(req.body)) {
+    return req.body;
+  }
+  return new Promise((resolve, reject) => {
+    let raw = '';
+    req.on('data', chunk => { raw += chunk.toString(); });
+    req.on('end', () => {
+      try { resolve(JSON.parse(raw)); }
+      catch (e) { resolve({}); }
+    });
+    req.on('error', reject);
+  });
+}
+
 // ── Handler ────────────────────────────────────────────────────────────────────
 module.exports = async (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+  if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { messages } = req.body;
+  const body = await parseBody(req);
+  const { messages } = body;
 
   if (!Array.isArray(messages) || messages.length === 0) {
     return res.status(400).json({ error: 'messages array is required' });
