@@ -7,7 +7,7 @@
 const PRICE_FLOOR = 150;
 const PRICE_EXPECTED = 250;
 const PRICE_CEILING = 600;
-const INR_TO_USD = 0.012;
+const INR_TO_USD = 0.0118;   // approx ₹84.7/USD — verify before financial decisions
 const INR_TO_CRORE = 1e7;
 
 const COMPLIANCE_STATUS = {
@@ -26,12 +26,12 @@ function calculateBenchmark(sectorKey, actualIntensity) {
   const worst  = avg * 1.40;
   const best   = topQ * 0.80;
 
-  let percentile;
-  if (actualIntensity >= worst)       percentile = 0;
-  else if (actualIntensity <= best)   percentile = 100;
-  else if (actualIntensity >= avg)    percentile = 50 * (worst - actualIntensity) / (worst - avg);
-  else if (actualIntensity >= topQ)   percentile = 50 + 25 * (avg - actualIntensity) / (avg - topQ);
-  else                                percentile = 75 + 25 * (topQ - actualIntensity) / (topQ - best);
+  let relativePosition;
+  if (actualIntensity >= worst)       relativePosition = 0;
+  else if (actualIntensity <= best)   relativePosition = 100;
+  else if (actualIntensity >= avg)    relativePosition = 50 * (worst - actualIntensity) / (worst - avg);
+  else if (actualIntensity >= topQ)   relativePosition = 50 + 25 * (avg - actualIntensity) / (avg - topQ);
+  else                                relativePosition = 75 + 25 * (topQ - actualIntensity) / (topQ - best);
 
   return {
     sectorName:            s.name,
@@ -39,7 +39,7 @@ function calculateBenchmark(sectorKey, actualIntensity) {
     sectorAvgIntensity:    +avg.toFixed(4),
     cctsTargetIntensity:   +target.toFixed(4),
     topQuartileIntensity:  +topQ.toFixed(4),
-    percentile:            +percentile.toFixed(1),
+    relativePosition:      +relativePosition.toFixed(1),
     gapToTargetPct:        +((actualIntensity - target) / target).toFixed(4),
     gapToTopQuartilePct:   +((actualIntensity - topQ) / topQ).toFixed(4),
     outputUnit:            s.outputUnit,
@@ -196,6 +196,45 @@ function calculateCCTS({ sectorKey, annualProduction, actualIntensity = null }) 
     targetOfficiallyNotified:  s.targetOfficiallyNotified,
     source:                    s.source,
     methodologyNote,
+  };
+}
+
+// ─── What-If: Intensity Reduction + Production Growth Scenario ──────────────
+
+function calculateWhatIf(baseResult, reductionPct, productionGrowthPct = 0) {
+  if (reductionPct <= 0 || reductionPct >= 1) throw new Error("reductionPct must be between 0 and 1.");
+  if (productionGrowthPct < -0.5 || productionGrowthPct > 0.5) throw new Error("productionGrowthPct must be between -0.5 and 0.5.");
+
+  const newIntensity  = baseResult.actualIntensity * (1 - reductionPct);
+  const newProduction = baseResult.annualProduction * (1 + productionGrowthPct);
+  const intensityGap  = newIntensity - baseResult.cctsTarget;
+  const newCccDelta   = intensityGap * newProduction;
+
+  const thresholdBand = baseResult.cctsTarget * 0.02;
+  let newStatus;
+  if (Math.abs(intensityGap) <= thresholdBand)  newStatus = COMPLIANCE_STATUS.AT_THRESHOLD;
+  else if (newCccDelta > 0)                       newStatus = COMPLIANCE_STATUS.UNDER_COMPLIER;
+  else                                             newStatus = COMPLIANCE_STATUS.OVER_COMPLIER;
+
+  const priceScenarios = [
+    { label: "Floor",    labelFull: "Floor (₹150/tCO₂e)",    priceInr: PRICE_FLOOR },
+    { label: "Expected", labelFull: "Expected (₹250/tCO₂e)", priceInr: PRICE_EXPECTED },
+    { label: "Ceiling",  labelFull: "Ceiling (₹600/tCO₂e)",  priceInr: PRICE_CEILING },
+  ].map(sc => {
+    const totalInr   = newCccDelta * sc.priceInr;
+    const totalCrore = totalInr / 1e7;
+    return { ...sc, totalInr: +totalInr.toFixed(0), totalCrore: +totalCrore.toFixed(2) };
+  });
+
+  return {
+    reductionPct,
+    productionGrowthPct,
+    newIntensity:           +newIntensity.toFixed(4),
+    newProduction:          +newProduction.toFixed(0),
+    newCccDelta:            +newCccDelta.toFixed(0),
+    deltaImprovementTonnes: +(baseResult.cccDelta - newCccDelta).toFixed(0),
+    newStatus,
+    priceScenarios,
   };
 }
 

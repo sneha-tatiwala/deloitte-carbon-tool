@@ -59,7 +59,7 @@
 <main style="max-width:1200px;margin:0 auto;padding:2rem 1.5rem;">
 
   <!-- Stat row -->
-  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2rem;" class="form-grid">
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2rem;" class="form-grid stat-grid">
     <div class="stat-box">
       <div class="stat-value green">490</div>
       <div class="stat-label">Obligated Units</div>
@@ -82,7 +82,7 @@
   <div style="display:grid;grid-template-columns:420px 1fr;gap:2rem;align-items:start;" class="results-grid">
 
     <!-- ── LEFT: Form ─────────────────────────────────────── -->
-    <div>
+    <div id="calc-form-panel">
       <div class="card">
         <p class="section-header">Company Inputs</p>
 
@@ -135,6 +135,31 @@
         <p class="section-header">Upcoming CCTS Deadlines</p>
         <div id="deadline-list"></div>
       </div>
+
+      <!-- Alert Subscription -->
+      <div class="card" style="margin-top:1.5rem;">
+        <p class="section-header">CCTS Regulatory Alerts</p>
+        <p style="font-size:0.8rem;color:#666;line-height:1.55;margin-bottom:1rem;">
+          Get notified when BEE publishes official emission intensity targets for your sector. Six sectors currently use proxy targets pending official notification.
+        </p>
+        <div style="margin-bottom:0.75rem;">
+          <label class="form-label" for="alert-sector">Sector to watch</label>
+          <div class="form-select-wrapper">
+            <select id="alert-sector" class="form-select" style="font-size:0.85rem;">
+              <option value="all">All sectors</option>
+            </select>
+          </div>
+        </div>
+        <div style="margin-bottom:0.75rem;">
+          <label class="form-label" for="alert-email">Email address</label>
+          <input type="email" id="alert-email" class="form-input"
+            placeholder="your@email.com" style="font-size:0.85rem;" />
+        </div>
+        <button class="btn-primary" style="width:100%;font-size:0.85rem;" onclick="subscribeAlerts()">
+          Subscribe to Alerts
+        </button>
+        <div id="alert-status" style="margin-top:0.6rem;font-size:0.78rem;min-height:1.2rem;"></div>
+      </div>
     </div>
 
     <!-- ── RIGHT: Results ─────────────────────────────────── -->
@@ -150,7 +175,7 @@
   </div><!-- end grid -->
 
   <!-- CTA strip -->
-  <div class="card card-dark" style="margin-top:2.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;">
+  <div class="card card-dark cta-strip" style="margin-top:2.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;">
     <div>
       <div style="font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--green);font-weight:700;margin-bottom:0.3rem;">Built for India's Carbon Advisory Market</div>
       <div style="font-size:1rem;font-weight:700;color:#fff;">A prototype CCTS compliance and policy intelligence platform for industrial advisors and their clients.</div>
@@ -188,14 +213,19 @@
 <script src="data/calculator-data.js"></script>
 <script>
 
-// ── Populate sector dropdown ──────────────────────────────────
+// ── Populate sector dropdowns ─────────────────────────────────
 (function populateSectors() {
-  const sel = document.getElementById('sector');
+  const calcSel  = document.getElementById('sector');
+  const alertSel = document.getElementById('alert-sector');
   getSectorOptions().forEach(opt => {
-    const o = document.createElement('option');
-    o.value = opt.key;
-    o.textContent = opt.name;
-    sel.appendChild(o);
+    const makeOption = () => {
+      const o = document.createElement('option');
+      o.value = opt.key;
+      o.textContent = opt.name;
+      return o;
+    };
+    calcSel.appendChild(makeOption());
+    if (alertSel) alertSel.appendChild(makeOption());
   });
 })();
 
@@ -209,6 +239,9 @@ document.getElementById('sector').addEventListener('change', function() {
   document.getElementById('sector-fact').textContent = s ? s.keyFact : '';
   document.getElementById('production-unit').textContent = s ? pluralUnit(s.outputUnit) + '/yr' : 'tonnes/yr';
   document.getElementById('intensity').placeholder = s ? `tCO₂e per ${s.outputUnit}` : 'tCO₂e per unit of output';
+  // Keep alert sector in sync with calculator sector
+  const alertSel = document.getElementById('alert-sector');
+  if (alertSel && this.value) alertSel.value = this.value;
 });
 
 // ── Toggle intensity input ────────────────────────────────────
@@ -234,6 +267,60 @@ document.getElementById('unknown-intensity').addEventListener('change', function
 
 // ── Main calculator ───────────────────────────────────────────
 let benchmarkChart = null;
+let lastResult = null;
+
+function updateWhatIf() {
+  if (!lastResult) return;
+  const intensitySlider    = document.getElementById('whatif-slider');
+  const productionSlider   = document.getElementById('whatif-growth-slider');
+  const intensityDisplay   = document.getElementById('whatif-pct');
+  const productionDisplay  = document.getElementById('whatif-growth-pct');
+  const resultDiv          = document.getElementById('whatif-result');
+  if (!intensitySlider || !resultDiv) return;
+
+  const intensityPct  = parseInt(intensitySlider.value);
+  const growthPct     = productionSlider ? parseInt(productionSlider.value) : 0;
+
+  if (intensityDisplay)  intensityDisplay.textContent  = intensityPct + '%';
+  if (productionDisplay) productionDisplay.textContent = (growthPct >= 0 ? '+' : '') + growthPct + '%';
+
+  const w = calculateWhatIf(lastResult, intensityPct / 100, growthPct / 100);
+
+  const statusLabels = {
+    over_complier:  { text: 'OVER-COMPLIER — eligible to sell CCCs', color: 'var(--green-dark)' },
+    under_complier: { text: 'UNDER-COMPLIER — must purchase CCCs',   color: 'var(--red)' },
+    at_threshold:   { text: 'AT THRESHOLD — within 2% of target',    color: 'var(--amber)' },
+  };
+  const st = statusLabels[w.newStatus];
+  const expectedScenario = w.priceScenarios.find(s => s.label === 'Expected');
+  const crore    = Math.abs(expectedScenario.totalCrore).toFixed(2);
+  const isRevenue = expectedScenario.totalInr < 0;
+
+  const netChange = w.deltaImprovementTonnes;
+  const netLabel  = netChange > 0
+    ? `<span style="color:var(--green-dark);">↓ ${netChange.toLocaleString()} tCO₂e better</span>`
+    : netChange < 0
+      ? `<span style="color:var(--red);">↑ ${Math.abs(netChange).toLocaleString()} tCO₂e worse</span>`
+      : `<span style="color:var(--amber);">No net change</span>`;
+
+  resultDiv.innerHTML = `
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.75rem;text-align:center;margin-bottom:0.6rem;">
+      <div>
+        <div style="font-size:1.05rem;font-weight:700;">${w.newIntensity.toFixed(4)}</div>
+        <div style="font-size:0.72rem;color:#888;margin-top:0.15rem;">New Intensity (tCO₂e/t)</div>
+      </div>
+      <div>
+        <div style="font-size:1rem;font-weight:700;">${netLabel}</div>
+        <div style="font-size:0.72rem;color:#888;margin-top:0.15rem;">net CCC position change</div>
+      </div>
+      <div>
+        <div style="font-size:1.05rem;font-weight:700;">${isRevenue ? '+' : '−'} ₹${crore} Cr</div>
+        <div style="font-size:0.72rem;color:#888;margin-top:0.15rem;">at ₹250/tCO₂e</div>
+      </div>
+    </div>
+    <div style="font-size:0.78rem;font-weight:600;color:${st.color};">${st.text}</div>
+  `;
+}
 
 function runCalculator() {
   const sectorKey  = document.getElementById('sector').value;
@@ -260,6 +347,7 @@ function runCalculator() {
 }
 
 function renderResults(r) {
+  lastResult = r;
   const panel = document.getElementById('results-panel');
   const s = r.compliance_status || r.status;
 
@@ -344,7 +432,7 @@ function renderResults(r) {
       <div class="stat-box">
         <div class="stat-value ${r.benchmark.gapToTargetPct > 0 ? 'red' : 'green'}">${r.benchmark.gapToTargetPct > 0 ? '+' : ''}${(r.benchmark.gapToTargetPct * 100).toFixed(1)}%</div>
         <div class="stat-label">vs CCTS Target</div>
-        <div style="font-size:0.73rem;color:#888;margin-top:0.2rem;">~${r.benchmark.percentile}th percentile</div>
+        <div style="font-size:0.73rem;color:#888;margin-top:0.2rem;">rel. position ~${r.benchmark.relativePosition}%</div>
       </div>
     </div>
 
@@ -382,6 +470,44 @@ function renderResults(r) {
       </p>
     </div>
 
+    <!-- What-If Scenario: Intensity + Production Growth -->
+    <div class="card" style="margin-bottom:1.25rem;padding:1rem;">
+      <p class="section-header">What-If: Scenario Modelling</p>
+      <p style="font-size:0.8rem;color:#666;margin-bottom:1rem;">
+        Model how changes to emission intensity and production volume together affect your compliance position — at the expected carbon price (₹250/tCO₂e).
+      </p>
+
+      <!-- Intensity slider -->
+      <div style="margin-bottom:0.85rem;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.35rem;">
+          <span style="font-size:0.78rem;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:0.05em;">Intensity reduction</span>
+          <span id="whatif-pct" style="font-weight:700;font-size:0.95rem;color:var(--green-dark);">10%</span>
+        </div>
+        <input type="range" id="whatif-slider" min="1" max="50" value="10"
+               style="width:100%;accent-color:var(--green);"
+               oninput="updateWhatIf()" />
+        <div style="display:flex;justify-content:space-between;font-size:0.7rem;color:#aaa;margin-top:0.15rem;">
+          <span>1%</span><span>50%</span>
+        </div>
+      </div>
+
+      <!-- Production growth slider -->
+      <div style="margin-bottom:1rem;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.35rem;">
+          <span style="font-size:0.78rem;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:0.05em;">Production growth</span>
+          <span id="whatif-growth-pct" style="font-weight:700;font-size:0.95rem;color:var(--amber);">+0%</span>
+        </div>
+        <input type="range" id="whatif-growth-slider" min="-20" max="30" value="0"
+               style="width:100%;accent-color:var(--amber);"
+               oninput="updateWhatIf()" />
+        <div style="display:flex;justify-content:space-between;font-size:0.7rem;color:#aaa;margin-top:0.15rem;">
+          <span>−20%</span><span>0</span><span>+30%</span>
+        </div>
+      </div>
+
+      <div id="whatif-result" style="background:var(--grey-50);border:1px solid var(--grey-300);border-radius:6px;padding:0.75rem;"></div>
+    </div>
+
     <!-- Deloitte Recommendations — collapsed by default -->
     <div style="margin-bottom:1.25rem;">
       <button class="btn-secondary" style="width:100%;display:flex;justify-content:space-between;align-items:center;padding:0.7rem 1rem;" onclick="toggleRecs(this)">
@@ -408,6 +534,9 @@ function renderResults(r) {
       </a>
     </div>
   `;
+
+  // Initialise what-if with defaults (10% intensity reduction, 0% production growth)
+  updateWhatIf();
 }
 
 function toggleRecs(btn) {
@@ -416,6 +545,40 @@ function toggleRecs(btn) {
   const hidden = container.style.display === 'none';
   container.style.display = hidden ? 'block' : 'none';
   icon.textContent = hidden ? '▲ Hide' : '▼ Show';
+}
+
+// ── Alert subscription ────────────────────────────────────────
+async function subscribeAlerts() {
+  const email  = document.getElementById('alert-email').value.trim();
+  const sector = document.getElementById('alert-sector').value;
+  const status = document.getElementById('alert-status');
+
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    status.style.color = 'var(--red)';
+    status.textContent = 'Please enter a valid email address.';
+    return;
+  }
+
+  status.style.color = '#888';
+  status.textContent = 'Subscribing…';
+
+  try {
+    const res  = await fetch('/api/subscribe', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ email, sector }),
+    });
+    const data = await res.json();
+
+    if (!res.ok || data.error) throw new Error(data.error || 'Subscription failed.');
+
+    status.style.color = 'var(--green-dark)';
+    status.textContent = 'Subscribed. Check your inbox for confirmation.';
+    document.getElementById('alert-email').value = '';
+  } catch (err) {
+    status.style.color = 'var(--red)';
+    status.textContent = err.message || 'Something went wrong — please try again.';
+  }
 }
 
 function renderBenchmarkRow(label, value, maxValue, barClass) {

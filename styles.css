@@ -694,12 +694,38 @@ body {
 
 /* ── Print / PDF export ────────────────────────────────────── */
 @media print {
-  .nav-bar, .ticker, .filter-bar, .btn-primary,
-  .btn-secondary, .btn-cta { display: none !important; }
+  /* Hide chrome */
+  .nav-bar, .ticker, .cw, #calc-form-panel,
+  .page-hero, .stat-grid, .cta-strip, .site-footer,
+  .btn-primary, .btn-secondary, .btn-cta { display: none !important; }
 
-  .card, .rec-card, .status-card { box-shadow: none !important; border: 1px solid #ccc; }
-  body { font-size: 12px; }
-  .page-hero { background: #f0f0f0 !important; color: #000 !important; }
+  /* Full-width results */
+  .results-grid { grid-template-columns: 1fr !important; }
+  #results-panel { width: 100% !important; }
+
+  /* Force recommendations to show in print even if collapsed */
+  #results-panel [style*="display:none"] { display: block !important; }
+
+  /* Clean up cards */
+  .card, .rec-card, .status-card {
+    box-shadow: none !important;
+    border: 1px solid #ccc;
+    break-inside: avoid;
+  }
+
+  body { font-size: 12px; background: #fff; }
+
+  /* Print header */
+  #results-panel::before {
+    content: "Carbon Intelligence India — CCTS Compliance Report";
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
+    color: #000;
+    border-bottom: 2px solid #86BC25;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.25rem;
+  }
 }
 
 /* ── Utility ───────────────────────────────────────────────── */

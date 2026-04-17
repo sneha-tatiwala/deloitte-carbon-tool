@@ -131,8 +131,8 @@
     </div>
 
     <div style="background:var(--grey-50);border:1px solid var(--grey-300);border-radius:4px;padding:1rem;font-size:0.83rem;line-height:1.8;">
-      <div style="font-weight:700;margin-bottom:0.5rem;">Step 4 — Peer Benchmark Percentile</div>
-      <span style="color:#666;">Linear interpolation across four reference points: worst performer (assumed 40% above sector average), sector average (50th percentile), top quartile threshold (75th percentile), best-in-class (assumed 20% below top quartile). Gives an estimated sector percentile for the user's intensity. Methodology note included in every output.</span>
+      <div style="font-weight:700;margin-bottom:0.5rem;">Step 4 — Sector Relative Position Indicator</div>
+      <span style="color:#666;">Linear interpolation across four anchor points derived from published benchmarks: worst-performing proxy (40% above sector average), sector average, top-quartile threshold, and best-in-class proxy (20% below top quartile). The output is a <strong>directional relative position indicator</strong> (0 = worst, 100 = best) — not a statistically validated percentile. BEE's individual entity baseline survey for the 490 CCTS-obligated units is not publicly available; no empirical distribution underlies this estimate. Use as a relative signal for where you sit in the sector range, not as a statistical claim about your exact position.</span>
     </div>
   </div>
 
@@ -152,6 +152,40 @@
     <p style="font-size:0.75rem;color:#888;margin-top:0.75rem;">
       * Sectors marked "Proxy" use a reduction range of 3.0%–6.0% consistent with the three officially notified sectors. BEE had not published individual targets for these sectors as of April 2026.
     </p>
+  </div>
+
+  <!-- Competitive differentiation -->
+  <div class="card" style="margin-bottom:1.5rem;border-left:4px solid var(--green-dark);">
+    <p class="section-header">How This Differs From Existing Carbon Tools</p>
+    <p style="font-size:0.85rem;line-height:1.7;margin-bottom:1rem;">
+      A number of commercial carbon accounting platforms exist globally and in India. On the global side: Persefoni, Sweep, Watershed, Net0, Cero.ai. On the India side: EcoSense and Sentra — the latter being the only commercially launched platform built natively for CCTS compliance, with ERP integration and BEE submission workflows. These tools serve their markets well. This tool is built to address gaps that most of them share, and to differentiate on the dimensions below.
+    </p>
+    <div style="display:grid;gap:0.75rem;">
+      <div style="background:var(--grey-50);border:1px solid var(--grey-300);border-radius:4px;padding:0.85rem;">
+        <div style="font-weight:700;font-size:0.85rem;margin-bottom:0.35rem;">Where existing tools fall short on India CCTS</div>
+        <p style="font-size:0.83rem;color:#555;line-height:1.6;margin:0;">
+          Most commercial carbon tools are architected for the EU ETS or voluntary carbon markets (VCM) and treat India as an add-on market. They use absolute-cap logic (total GHG tonnes), not intensity-based logic (tCO₂e per unit of output). India's CCTS is intensity-based — the compliance target is a rate, not a volume. A tool built on EU ETS mechanics cannot correctly model CCTS compliance for a company that is scaling production while reducing intensity.
+        </p>
+      </div>
+      <div style="background:var(--grey-50);border:1px solid var(--grey-300);border-radius:4px;padding:0.85rem;">
+        <div style="font-weight:700;font-size:0.85rem;margin-bottom:0.35rem;">What this tool does differently</div>
+        <p style="font-size:0.83rem;color:#555;line-height:1.6;margin:0;">
+          This tool is built natively on BEE's CCTS mechanics: intensity targets (tCO₂e per unit of production output), BEE-notified reduction ranges by sector, India-specific price collar (₹150–₹600/tCO₂e), and the correct separation between the three officially notified sectors (cement, aluminium, chlor-alkali) and the seven proxy sectors where BEE targets remain unpublished as of April 2026. This distinction matters: a tool that treats all nine sectors as equally confirmed is overstating precision for more than two-thirds of the covered entities.
+        </p>
+      </div>
+      <div style="background:var(--grey-50);border:1px solid var(--grey-300);border-radius:4px;padding:0.85rem;">
+        <div style="font-weight:700;font-size:0.85rem;margin-bottom:0.35rem;">Where this tool differs from Sentra and EcoSense specifically</div>
+        <p style="font-size:0.83rem;color:#555;line-height:1.6;margin:0;">
+          Sentra is the only India-native CCTS platform with ERP integration and BEE submission automation — strengths that reflect a commercial product built for enterprise compliance workflows. This tool differs in three ways: it is publicly accessible without a sales process, it integrates a 31-policy intelligence database alongside the compliance calculator, and it includes an AI assistant with domain depth on CCTS mechanics, MRV bottlenecks, and ESCert transition risk. It is not a replacement for Sentra's production features; it is a demonstration of what a client-facing advisory intelligence layer looks like on top of the compliance mechanics.
+        </p>
+      </div>
+      <div style="background:var(--grey-50);border:1px solid var(--grey-300);border-radius:4px;padding:0.85rem;">
+        <div style="font-weight:700;font-size:0.85rem;margin-bottom:0.35rem;">The scope boundary this tool respects</div>
+        <p style="font-size:0.83rem;color:#555;line-height:1.6;margin:0;">
+          This tool does not cover the Voluntary Carbon Market (VCM) project development pipeline, Article 6 ITMO export pathways, or BRSR Scope 3 supply chain mapping — areas where commercial platforms have depth. It covers one problem precisely: CCTS compliance position for India's 490 obligated industrial entities, against the specific regulatory framework that applies to them, ahead of the mid-2026 full trading launch.
+        </p>
+      </div>
+    </div>
   </div>
 
   <!-- What Deloitte gains -->
