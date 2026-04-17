@@ -671,17 +671,62 @@ body {
 @media (max-width: 768px) {
   .hide-mobile { display: none !important; }
 
+  /* Nav: wrap to two rows, links scroll horizontally */
+  .nav-inner {
+    flex-wrap: wrap !important;
+    height: auto !important;
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+    gap: 0.5rem !important;
+  }
+  .nav-links {
+    width: 100%;
+    margin-left: 0 !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 0.2rem;
+  }
+  .nav-links::-webkit-scrollbar { display: none; }
+
+  /* Filter bar: sticky offset accounts for taller nav */
+  .filter-bar { top: 80px; }
+
   .page-hero { padding: 1.75rem 0 1.5rem; }
   .page-hero h1 { font-size: 1.4rem; }
 
   .form-grid { grid-template-columns: 1fr !important; }
+  /* Stat grid stays 2 cols — more readable than 1 */
+  .stat-grid { grid-template-columns: repeat(2, 1fr) !important; }
   .results-grid { grid-template-columns: 1fr !important; }
   .policy-grid  { grid-template-columns: 1fr !important; }
 
   .data-table th,
   .data-table td { padding: 0.5rem 0.6rem; font-size: 0.8rem; }
 
-  .filter-bar { top: 48px; }
+  /* JS-generated result grids collapse to single column */
+  .result-two-col-grid,
+  .action-cta-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .whatif-result-grid {
+    grid-template-columns: 1fr !important;
+    text-align: left !important;
+  }
+
+  /* Filter chips: scroll horizontally instead of wrapping */
+  .filter-chips-row {
+    flex-wrap: nowrap !important;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 0.35rem;
+  }
+  .filter-chips-row::-webkit-scrollbar { display: none; }
+
+  /* Search input full width on mobile */
+  .search-input { max-width: 100% !important; }
 }
 
 @media (max-width: 480px) {
@@ -726,6 +771,17 @@ body {
     padding-bottom: 0.5rem;
     margin-bottom: 1.25rem;
   }
+}
+
+/* ── Desktop grid helpers (JS-generated content) ───────────── */
+.result-two-col-grid { grid-template-columns: 1fr 1fr; }
+.action-cta-grid     { grid-template-columns: 1fr 1fr; }
+.whatif-result-grid  { grid-template-columns: repeat(3, 1fr); text-align: center; }
+
+/* ── Scrollable table wrapper ───────────────────────────────── */
+.table-scroll-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* ── Utility ───────────────────────────────────────────────── */

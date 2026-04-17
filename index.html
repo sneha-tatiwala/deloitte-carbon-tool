@@ -14,9 +14,9 @@
 
 <!-- ── Navigation ───────────────────────────────────────────── -->
 <nav class="nav-bar">
-  <div style="max-width:1200px;margin:0 auto;padding:0 1.5rem;display:flex;align-items:center;gap:2rem;height:56px;">
+  <div class="nav-inner" style="max-width:1200px;margin:0 auto;padding:0 1.5rem;display:flex;align-items:center;gap:2rem;height:56px;">
     <a href="index.html" class="nav-logo">Carbon Intelligence <span>India</span></a>
-    <div style="display:flex;gap:0.25rem;margin-left:auto;flex-wrap:wrap;">
+    <div class="nav-links" style="display:flex;gap:0.25rem;margin-left:auto;flex-wrap:wrap;">
       <a href="index.html"          class="nav-link active">CCTS Calculator</a>
       <a href="policy-tracker.html" class="nav-link">Policy Tracker</a>
       <a href="about.html"          class="nav-link">About</a>
@@ -304,7 +304,7 @@ function updateWhatIf() {
       : `<span style="color:var(--amber);">No net change</span>`;
 
   resultDiv.innerHTML = `
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.75rem;text-align:center;margin-bottom:0.6rem;">
+    <div class="whatif-result-grid" style="display:grid;gap:0.75rem;margin-bottom:0.6rem;">
       <div>
         <div style="font-size:1.05rem;font-weight:700;">${w.newIntensity.toFixed(4)}</div>
         <div style="font-size:0.72rem;color:#888;margin-top:0.15rem;">New Intensity (tCO₂e/t)</div>
@@ -423,7 +423,7 @@ function renderResults(r) {
     </div>
 
     <!-- CCC Delta -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.25rem;">
+    <div class="result-two-col-grid" style="display:grid;gap:1rem;margin-bottom:1.25rem;">
       <div class="stat-box">
         <div class="stat-value" style="color:${deltaColor};">${deltaAbs.toLocaleString()}</div>
         <div class="stat-label">CCC ${deltaType}</div>
@@ -453,6 +453,7 @@ function renderResults(r) {
     <!-- Financial Exposure -->
     <div class="card" style="margin-bottom:1.25rem;padding:1rem;">
       <p class="section-header">Financial Exposure — Three Price Scenarios</p>
+      <div class="table-scroll-wrapper">
       <table class="data-table">
         <thead>
           <tr>
@@ -464,6 +465,7 @@ function renderResults(r) {
         </thead>
         <tbody>${priceRows}</tbody>
       </table>
+      </div>
       <p style="font-size:0.73rem;color:#888;margin-top:0.5rem;">
         ${r.cccDelta < 0 ? '+ indicates revenue to company' : '− indicates cost to company'} ·
         INR/USD indicative rate ₹84.5/USD — verify before financial decisions
@@ -525,7 +527,7 @@ function renderResults(r) {
     </div>
 
     <!-- Action CTAs -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;">
+    <div class="action-cta-grid" style="display:grid;gap:0.75rem;">
       <button class="btn-primary" onclick="window.print()">
         Export as PDF
       </button>
@@ -537,6 +539,13 @@ function renderResults(r) {
 
   // Initialise what-if with defaults (10% intensity reduction, 0% production growth)
   updateWhatIf();
+
+  // On mobile, scroll results into view so users don't miss them
+  if (window.innerWidth <= 768) {
+    setTimeout(() => {
+      document.getElementById('results-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 80);
+  }
 }
 
 function toggleRecs(btn) {
