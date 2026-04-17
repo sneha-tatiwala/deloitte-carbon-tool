@@ -45,7 +45,7 @@ module.exports = async function handler(req, res) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        from: 'Carbon Intelligence India <alerts@carbonintel.snehatatiwala.com>',
+        from: 'Carbon Intelligence India <alerts@snehatatiwala.com>',
         to: [email],
         subject: `CCTS Regulatory Alert — ${sectorLabel} subscription confirmed`,
         html: `
@@ -80,7 +80,7 @@ module.exports = async function handler(req, res) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        from: 'Carbon Intelligence India <alerts@carbonintel.snehatatiwala.com>',
+        from: 'Carbon Intelligence India <alerts@snehatatiwala.com>',
         to: ['snehaa@bu.edu'],
         subject: `New CCTS alert subscriber — ${sectorLabel}`,
         text: `New subscriber: ${email}\nSector: ${sectorLabel}\nDate: ${now}`,
