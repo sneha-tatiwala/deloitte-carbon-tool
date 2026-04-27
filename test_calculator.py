@@ -7,6 +7,7 @@ Run with: python -m pytest test_calculator.py -v
 import pytest
 from calculator import (
     calculate_ccts_compliance,
+    calculate_whatif_reduction,
     list_sectors,
     SECTOR_DATA,
     ComplianceStatus,
@@ -192,19 +193,19 @@ class TestBenchmarks:
         result = calculate_ccts_compliance("cement", 1_000_000, actual_intensity=0.74)
         assert result.benchmark.sector_name == "Cement"
 
-    def test_percentile_in_range(self):
+    def test_relative_position_in_range(self):
         result = calculate_ccts_compliance("cement", 1_000_000, actual_intensity=0.74)
-        assert 0.0 <= result.benchmark.percentile_vs_sector <= 100.0
+        assert 0.0 <= result.benchmark.relative_position_pct <= 100.0
 
-    def test_worst_performer_near_zero_percentile(self):
+    def test_worst_performer_near_zero_position(self):
         worst_intensity = SECTOR_DATA["cement"]["baseline_intensity"] * 1.45
         result = calculate_ccts_compliance("cement", 1_000_000, actual_intensity=worst_intensity)
-        assert result.benchmark.percentile_vs_sector <= 5.0
+        assert result.benchmark.relative_position_pct <= 5.0
 
-    def test_best_performer_near_100_percentile(self):
+    def test_best_performer_near_100_position(self):
         best_intensity = SECTOR_DATA["cement"]["top_quartile_intensity"] * 0.75
         result = calculate_ccts_compliance("cement", 1_000_000, actual_intensity=best_intensity)
-        assert result.benchmark.percentile_vs_sector >= 95.0
+        assert result.benchmark.relative_position_pct >= 95.0
 
     def test_gap_to_target_positive_for_under_complier(self):
         s = SECTOR_DATA["cement"]
@@ -260,6 +261,49 @@ class TestRecommendations:
         result = calculate_ccts_compliance("cement", 1_000_000, actual_intensity=0.74)
         services = [r.service for r in result.recommendations]
         assert len(services) == len(set(services))
+
+
+# ---------------------------------------------------------------------------
+# What-If Reduction
+# ---------------------------------------------------------------------------
+
+class TestWhatIfReduction:
+
+    def test_invalid_reduction_zero_raises(self):
+        base = calculate_ccts_compliance("cement", 1_000_000, actual_intensity=0.74)
+        with pytest.raises(ValueError):
+            calculate_whatif_reduction(base, 0.0)
+
+    def test_invalid_reduction_one_raises(self):
+        base = calculate_ccts_compliance("cement", 1_000_000, actual_intensity=0.74)
+        with pytest.raises(ValueError):
+            calculate_whatif_reduction(base, 1.0)
+
+    def test_new_intensity_reduced_by_pct(self):
+        base = calculate_ccts_compliance("cement", 1_000_000, actual_intensity=0.74)
+        w = calculate_whatif_reduction(base, 0.10)
+        assert w["new_intensity"] == pytest.approx(0.74 * 0.90, rel=1e-4)
+
+    def test_reduction_improves_ccc_delta(self):
+        base = calculate_ccts_compliance("cement", 1_000_000, actual_intensity=0.74)
+        w = calculate_whatif_reduction(base, 0.10)
+        assert w["new_ccc_delta"] < base.ccc_delta_tonnes
+
+    def test_large_reduction_flips_to_over_complier(self):
+        base = calculate_ccts_compliance("cement", 1_000_000, actual_intensity=0.74)
+        assert base.compliance_status == ComplianceStatus.UNDER_COMPLIER
+        w = calculate_whatif_reduction(base, 0.15)
+        assert w["new_status"] in (ComplianceStatus.OVER_COMPLIER, ComplianceStatus.AT_THRESHOLD)
+
+    def test_three_price_scenarios_returned(self):
+        base = calculate_ccts_compliance("cement", 1_000_000, actual_intensity=0.74)
+        w = calculate_whatif_reduction(base, 0.10)
+        assert len(w["price_scenarios"]) == 3
+
+    def test_delta_improvement_is_positive_for_under_complier(self):
+        base = calculate_ccts_compliance("cement", 1_000_000, actual_intensity=0.74)
+        w = calculate_whatif_reduction(base, 0.10)
+        assert w["delta_improvement_tonnes"] > 0
 
 
 # ---------------------------------------------------------------------------

@@ -10,13 +10,13 @@ const PORT = process.env.PORT || 3001;
 app.use(require('express').json());
 
 // ── Auto-mount api/ handlers ─────────────────────────────────
-const apiDir = require('path').join(__dirname, 'api');
+const apiDir = path.join(__dirname, 'api');
 if (fs.existsSync(apiDir)) {
   fs.readdirSync(apiDir)
     .filter(f => f.endsWith('.js'))
     .forEach(file => {
       const route   = `/api/${file.slice(0, -3)}`;
-      const handler = require(require('path').join(apiDir, file));
+      const handler = require(path.join(apiDir, file));
       app.all(route, handler);
       console.log(`  Mounted: ${route}`);
     });
@@ -30,7 +30,7 @@ app.use(require('express').static(__dirname, {
 
 // ── Fallback ─────────────────────────────────────────────────
 app.use((req, res) => {
-  res.sendFile(require('path').join(__dirname, 'index.html'));
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 app.listen(PORT, () => {

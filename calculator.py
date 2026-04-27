@@ -55,7 +55,7 @@ from enum import Enum
 PRICE_FLOOR_INR = 150       # ₹/tCO2e  — regulatory floor
 PRICE_EXPECTED_INR = 250    # ₹/tCO2e  — expected market average at launch
 PRICE_CEILING_INR = 600     # ₹/tCO2e  — regulatory ceiling
-INR_TO_USD = 0.012          # approximate conversion rate (April 2026)
+INR_TO_USD = 0.0118         # approx ₹84.7/USD — verify before financial decisions
 
 # ---------------------------------------------------------------------------
 # Sector Data
@@ -251,7 +251,7 @@ class PeerBenchmark:
     sector_average_intensity: float
     ccts_target_intensity: float
     top_quartile_intensity: float
-    percentile_vs_sector: float           # estimated percentile (0=worst, 100=best)
+    relative_position_pct: float          # estimated relative position (0=worst, 100=best); not a statistically validated percentile — no empirical distribution underlies this figure
     gap_to_target_pct: float              # % above(+) or below(-) CCTS target
     gap_to_top_quartile_pct: float        # % above(+) or below(-) top quartile
     output_unit: str
@@ -453,18 +453,15 @@ def _calculate_benchmark(
     best = top_q * 0.80
 
     if actual_intensity >= worst:
-        percentile = 0.0
+        relative_position = 0.0
     elif actual_intensity <= best:
-        percentile = 100.0
+        relative_position = 100.0
     elif actual_intensity >= avg:
-        # Between worst and average: 0–50th percentile
-        percentile = 50.0 * (worst - actual_intensity) / (worst - avg)
+        relative_position = 50.0 * (worst - actual_intensity) / (worst - avg)
     elif actual_intensity >= top_q:
-        # Between average and top quartile: 50–75th percentile
-        percentile = 50.0 + 25.0 * (avg - actual_intensity) / (avg - top_q)
+        relative_position = 50.0 + 25.0 * (avg - actual_intensity) / (avg - top_q)
     else:
-        # Between top quartile and best: 75–100th percentile
-        percentile = 75.0 + 25.0 * (top_q - actual_intensity) / (top_q - best)
+        relative_position = 75.0 + 25.0 * (top_q - actual_intensity) / (top_q - best)
 
     gap_to_target_pct = (actual_intensity - target) / target
     gap_to_top_quartile_pct = (actual_intensity - top_q) / top_q
@@ -475,7 +472,7 @@ def _calculate_benchmark(
         sector_average_intensity=round(avg, 4),
         ccts_target_intensity=round(target, 4),
         top_quartile_intensity=round(top_q, 4),
-        percentile_vs_sector=round(percentile, 1),
+        relative_position_pct=round(relative_position, 1),
         gap_to_target_pct=round(gap_to_target_pct, 4),
         gap_to_top_quartile_pct=round(gap_to_top_quartile_pct, 4),
         output_unit=s["output_unit"],
@@ -715,9 +712,10 @@ def print_result(result: CCTSResult) -> None:
     print(f"  Sector average       : {b.sector_average_intensity:.4f}")
     print(f"  CCTS target          : {b.ccts_target_intensity:.4f}")
     print(f"  Top quartile         : {b.top_quartile_intensity:.4f}")
-    print(f"  Est. sector percentile: {b.percentile_vs_sector:.0f}th  "
+    print(f"  Est. relative position : {b.relative_position_pct:.0f}%  "
           f"({'above' if b.gap_to_target_pct > 0 else 'below'} CCTS target by "
-          f"{abs(b.gap_to_target_pct)*100:.1f}%)")
+          f"{abs(b.gap_to_target_pct)*100:.1f}%)"
+          f"  [directional only — not a validated percentile]")
     print()
 
     print("  DELOITTE ADVISORY RECOMMENDATIONS")
@@ -747,6 +745,69 @@ def print_result(result: CCTSResult) -> None:
     print("  FY2023-24 baseline. Consult a Deloitte CCTS advisory specialist for")
     print("  a verified compliance assessment.")
     print("=" * 70 + "\n")
+
+
+# ---------------------------------------------------------------------------
+# What-If: Intensity Reduction Scenario
+# ---------------------------------------------------------------------------
+
+def calculate_whatif_reduction(
+    result: CCTSResult,
+    reduction_pct: float,
+) -> dict:
+    """
+    Return the compliance impact of reducing emission intensity by reduction_pct.
+
+    Parameters
+    ----------
+    result : CCTSResult
+        Base case from calculate_ccts_compliance().
+    reduction_pct : float
+        Fractional intensity reduction to model (e.g. 0.10 for 10%).
+        Must be between 0 and 1 exclusive.
+
+    Returns
+    -------
+    dict
+        new_intensity, new_ccc_delta, delta_improvement_tonnes,
+        new_status, price_scenarios.
+
+    Examples
+    --------
+    >>> base = calculate_ccts_compliance("cement", 2_000_000, actual_intensity=0.74)
+    >>> what_if = calculate_whatif_reduction(base, 0.10)
+    >>> what_if["new_intensity"]
+    0.666
+    """
+    if not 0 < reduction_pct < 1:
+        raise ValueError("reduction_pct must be between 0 and 1 (exclusive).")
+
+    new_intensity = result.actual_intensity * (1 - reduction_pct)
+    intensity_gap = new_intensity - result.ccts_target_intensity
+    new_ccc_delta = intensity_gap * result.annual_production_tonnes
+
+    threshold_band = result.ccts_target_intensity * 0.02
+    if abs(intensity_gap) <= threshold_band:
+        new_status = ComplianceStatus.AT_THRESHOLD
+    elif new_ccc_delta > 0:
+        new_status = ComplianceStatus.UNDER_COMPLIER
+    else:
+        new_status = ComplianceStatus.OVER_COMPLIER
+
+    scenarios = _calculate_price_scenarios(new_ccc_delta)
+    for sc in scenarios:
+        per_unit_inr = sc.total_exposure_inr / result.annual_production_tonnes
+        sc.per_unit_exposure_inr = round(per_unit_inr, 2)
+        sc.per_unit_exposure_usd = round(per_unit_inr * INR_TO_USD, 4)
+
+    return {
+        "reduction_pct": reduction_pct,
+        "new_intensity": round(new_intensity, 4),
+        "new_ccc_delta": round(new_ccc_delta, 2),
+        "delta_improvement_tonnes": round(result.ccc_delta_tonnes - new_ccc_delta, 2),
+        "new_status": new_status,
+        "price_scenarios": scenarios,
+    }
 
 
 # ---------------------------------------------------------------------------
