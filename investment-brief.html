@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Maharashtra Investment Brief — Carbon Intelligence India</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+<!-- ── Navigation ───────────────────────────────────────────── -->
+<nav class="nav-bar">
+  <div class="nav-inner" style="max-width:1200px;margin:0 auto;padding:0 1.5rem;display:flex;align-items:center;gap:2rem;height:56px;">
+    <a href="index.html" class="nav-logo">Carbon Intelligence <span>India</span></a>
+    <div class="nav-links" style="display:flex;gap:0.25rem;margin-left:auto;flex-wrap:wrap;">
+      <a href="index.html"             class="nav-link">CCTS Calculator</a>
+      <a href="policy-tracker.html"    class="nav-link">Policy Tracker</a>
+      <a href="investment-brief.html"  class="nav-link active">Investment Brief</a>
+      <a href="about.html"             class="nav-link">About</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ── Ticker ────────────────────────────────────────────────── -->
+<div class="ticker" style="padding:0.4rem 0;">
+  <div class="ticker-inner">
+    <span class="ticker-item">🏗️ Maharashtra SAPCC 2.0: ₹3 Lakh Crore Climate Finance Target by 2030</span>
+    <span class="ticker-item">⚙️ ~90 Obligated CCTS Entities in Maharashtra — FY2026 First Compliance Period Active</span>
+    <span class="ticker-item">🏭 Cement + Steel: 76% of Maharashtra CCTS Emissions — Capital Priority Sectors</span>
+    <span class="ticker-item">💰 AIIB: $270M Committed to Maharashtra Climate Resilient RE Programme — 2025</span>
+    <span class="ticker-item">📋 MH CIFP: Maharashtra Climate Investment Facilitation Programme — Live May 2026</span>
+    <span class="ticker-item">🌱 Maharashtra Under2 Coalition Member — Net Zero Commitment Aligned to NDC 2070</span>
+    <span class="ticker-item">💵 India Green Debt Market: USD 55.9B — 186% Growth Since 2021</span>
+  </div>
+</div>
+
+<!-- ── Estimates Notice ──────────────────────────────────────── -->
+<div style="background:#fffbf0;border-bottom:1px solid #e6d84a;padding:0.45rem 0;">
+  <div style="max-width:1200px;margin:0 auto;padding:0 1.5rem;font-size:0.77rem;color:#7a6500;display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;">
+    <span style="font-weight:700;white-space:nowrap;">Modelled estimates only.</span>
+    Maharashtra-level figures are derived from sector-average intensities and publicly available production data. Not official BEE entity-level data.
+    <a href="about.html" style="color:#7a6500;font-weight:600;margin-left:auto;white-space:nowrap;text-decoration:underline;">Full methodology →</a>
+  </div>
+</div>
+
+<!-- ── Page Hero ─────────────────────────────────────────────── -->
+<div class="page-hero">
+  <div style="max-width:1200px;margin:0 auto;padding:0 1.5rem;">
+    <div class="hero-badge">MH CIFP · Maharashtra Climate Investment Brief</div>
+    <h1>CCTS Compliance Gap as Capital Mobilization Opportunity</h1>
+    <p>Aggregating the compliance deficit across ~90 obligated entities in Maharashtra to size the abatement investment opportunity and support investor-ready pipeline development under the Maharashtra Climate Investment Facilitation Programme.</p>
+  </div>
+</div>
+
+<!-- ── Main Content ──────────────────────────────────────────── -->
+<main style="max-width:1200px;margin:0 auto;padding:2rem 1.5rem;">
+
+  <!-- Stat row -->
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2rem;" class="form-grid stat-grid">
+    <div class="stat-box">
+      <div class="stat-value">~90</div>
+      <div class="stat-label">Obligated Entities (MH est.)</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-value amber">4.5M</div>
+      <div class="stat-label">tCO₂e Aggregate Gap</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-value red">₹1,126 Cr</div>
+      <div class="stat-label">Compliance Cost at ₹250</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-value green" style="font-size:1.25rem;">₹6,000–10,000 Cr</div>
+      <div class="stat-label">Abatement Investment Opportunity</div>
+    </div>
+  </div>
+
+  <!-- Context blurb -->
+  <div class="card" style="margin-bottom:2rem;background:var(--grey-50);border-left:4px solid var(--green);">
+    <p style="font-size:0.9rem;line-height:1.75;color:#333;margin:0;">
+      Under India's Carbon Credit Trading Scheme, obligated industrial entities in Maharashtra face a compliance deficit estimated at ~4.5 million tCO₂e for FY2026. At the expected carbon price of ₹250/tCO₂e, this translates to ₹1,126 crore in compliance cost for entities operating at sector-average intensity, rising to ₹2,700 crore at the price ceiling (₹600). The more actionable framing for investors and programme managers is the abatement side: the capital required to close this gap through energy efficiency, fuel substitution, and process improvements, estimated at ₹6,000–10,000 crore. This brief maps that opportunity by sector, identifies near-term abatement pathways, and catalogues the financing instruments available to structure investor-ready project pipelines.
+    </p>
+  </div>
+
+  <!-- Sector breakdown table + chart -->
+  <div style="display:grid;grid-template-columns:1fr 400px;gap:2rem;align-items:start;margin-bottom:2rem;" class="results-grid">
+
+    <!-- Table -->
+    <div>
+      <p class="section-header">Maharashtra CCTS Sector Coverage — Estimated</p>
+      <div class="table-scroll-wrapper">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Sector</th>
+            <th style="text-align:right;">Entities (MH)</th>
+            <th style="text-align:right;">Gap (tCO₂e)</th>
+            <th style="text-align:right;">Cost at ₹250 (Cr)</th>
+            <th>Key Maharashtra Units</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Cement</strong></td>
+            <td style="text-align:right;">34</td>
+            <td style="text-align:right;" class="positive">2,420,000</td>
+            <td style="text-align:right;" class="positive">605</td>
+            <td style="font-size:0.78rem;color:#666;">Ultratech (Awarpur, Ratnagiri), ACC, Orient</td>
+          </tr>
+          <tr>
+            <td><strong>Iron &amp; Steel</strong></td>
+            <td style="text-align:right;">7</td>
+            <td style="text-align:right;" class="positive">1,683,000</td>
+            <td style="text-align:right;" class="positive">421</td>
+            <td style="font-size:0.78rem;color:#666;">JSW Steel Dolvi (10 MTPA), MIDC SMEs</td>
+          </tr>
+          <tr>
+            <td><strong>Fertilisers</strong></td>
+            <td style="text-align:right;">3</td>
+            <td style="text-align:right;" class="neutral">186,000</td>
+            <td style="text-align:right;" class="neutral">47</td>
+            <td style="font-size:0.78rem;color:#666;">RCF Trombay, Deepak Fertilisers (Pune)</td>
+          </tr>
+          <tr>
+            <td><strong>Textiles</strong></td>
+            <td style="text-align:right;">38</td>
+            <td style="text-align:right;" class="neutral">92,000</td>
+            <td style="text-align:right;" class="neutral">23</td>
+            <td style="font-size:0.78rem;color:#666;">Nagpur cluster, Ichalkaranji cluster</td>
+          </tr>
+          <tr>
+            <td><strong>Petroleum Refining</strong></td>
+            <td style="text-align:right;">3</td>
+            <td style="text-align:right;color:var(--grey-600);font-weight:600;">46,000</td>
+            <td style="text-align:right;color:var(--grey-600);font-weight:600;">12</td>
+            <td style="font-size:0.78rem;color:#666;">BPCL Mumbai, HPCL Mumbai</td>
+          </tr>
+          <tr>
+            <td><strong>Others</strong></td>
+            <td style="text-align:right;">5</td>
+            <td style="text-align:right;color:var(--grey-600);font-weight:600;">73,000</td>
+            <td style="text-align:right;color:var(--grey-600);font-weight:600;">18</td>
+            <td style="font-size:0.78rem;color:#666;">Aluminium (downstream rolling), Chlor-alkali, Pulp &amp; Paper, Petrochemicals</td>
+          </tr>
+          <tr style="background:var(--grey-50);">
+            <td style="font-weight:700;">Total</td>
+            <td style="text-align:right;font-weight:700;">~90</td>
+            <td style="text-align:right;font-weight:700;color:var(--red);">~4,500,000</td>
+            <td style="text-align:right;font-weight:700;color:var(--red);">₹1,126</td>
+            <td style="font-size:0.78rem;color:#888;">Sector-average intensity basis</td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+      <p style="font-size:0.72rem;color:#999;margin-top:0.5rem;">
+        Entity counts estimated from national CCTS coverage proportioned by Maharashtra's share of sector output (CSO, CMIE Prowess). Gap calculated at sector-average intensity vs. BEE CCTS target. Not official BEE entity-level data.
+      </p>
+    </div>
+
+    <!-- Chart -->
+    <div>
+      <p class="section-header">Compliance Gap by Sector (tCO₂e)</p>
+      <canvas id="gapChart"></canvas>
+    </div>
+
+  </div>
+
+  <!-- Two-frame: compliance cost vs abatement opportunity -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:2rem;" class="results-grid">
+    <div class="card" style="border-left:4px solid var(--red);">
+      <p class="section-header">The Compliance Framing</p>
+      <div style="font-size:2rem;font-weight:700;color:var(--red);margin-bottom:0.3rem;">₹1,126 Cr</div>
+      <div style="font-size:0.78rem;color:#888;margin-bottom:1rem;">at ₹250/tCO₂e expected price; rises to ₹2,700 Cr at the ₹600 price ceiling</div>
+      <p style="font-size:0.84rem;color:#555;line-height:1.65;margin:0;">
+        What Maharashtra's obligated industrial sector owes in carbon credits if nothing changes. The compliance cost is the pressure that creates demand for investment. It compounds at the ceiling price and is unavoidable once the first compliance period closes.
+      </p>
+    </div>
+    <div class="card" style="border-left:4px solid var(--green-dark);">
+      <p class="section-header">The Investment Framing</p>
+      <div style="font-size:2rem;font-weight:700;color:var(--green-dark);margin-bottom:0.3rem;">₹6,000–10,000 Cr</div>
+      <div style="font-size:0.78rem;color:#888;margin-bottom:1rem;">abatement capital needed for energy efficiency, fuel switching, and process improvement across the sector mix</div>
+      <p style="font-size:0.84rem;color:#555;line-height:1.65;margin:0;">
+        What investors can deploy to help Maharashtra's industrial sector avoid the compliance cost, earning returns through energy savings, CCTS carbon credit revenue, and green finance instrument premiums. This is the investor-ready project pipeline that MH CIFP is building.
+      </p>
+    </div>
+  </div>
+
+  <!-- Abatement pathways -->
+  <div style="margin-bottom:2rem;">
+    <p class="section-header">Near-Term Abatement Pathways by Sector</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;" class="results-grid">
+
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:0.5rem;margin-bottom:0.75rem;">
+          <span style="font-weight:700;font-size:0.95rem;">Cement</span>
+          <span style="font-size:0.72rem;font-weight:700;color:var(--grey-600);background:var(--grey-100);padding:0.2rem 0.5rem;border-radius:2px;white-space:nowrap;">₹800–1,800/tCO₂e <span style="font-weight:400;opacity:0.7;">(IEA/BNEF 2024)</span></span>
+        </div>
+        <ul style="font-size:0.83rem;color:#555;line-height:1.75;margin:0;padding-left:1.1rem;">
+          <li>Clinker substitution using fly ash and GGBS slag: 3–6% intensity reduction, lowest cost lever</li>
+          <li>Waste heat recovery (WHR) power plants: ₹600–900/tCO₂e avoided, 3–5 year payback</li>
+          <li>Alternative fuel co-processing with biomass and RDF reduces thermal energy intensity</li>
+          <li>On-site solar + storage for purchased electricity emissions</li>
+        </ul>
+        <div style="margin-top:0.75rem;font-size:0.75rem;color:var(--green-dark);font-weight:600;">Priority: WHR and clinker substitution. Shortest payback, bankable at existing CCTS price.</div>
+      </div>
+
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:0.5rem;margin-bottom:0.75rem;">
+          <span style="font-weight:700;font-size:0.95rem;">Iron &amp; Steel</span>
+          <span style="font-size:0.72rem;font-weight:700;color:var(--grey-600);background:var(--grey-100);padding:0.2rem 0.5rem;border-radius:2px;white-space:nowrap;">₹1,200–3,500/tCO₂e <span style="font-weight:400;opacity:0.7;">(McKinsey 2022)</span></span>
+        </div>
+        <ul style="font-size:0.83rem;color:#555;line-height:1.75;margin:0;padding-left:1.1rem;">
+          <li>Scrap-based EAF route shift: 30–60% lower intensity than BF-BOF for new capacity</li>
+          <li>Coal injection optimisation and coke oven efficiency upgrades</li>
+          <li>Blast furnace and converter gas waste heat recovery</li>
+          <li>On-site RE: JSW Dolvi (10 MTPA) holds existing solar commitments under EV100/RE100</li>
+        </ul>
+        <div style="margin-top:0.75rem;font-size:0.75rem;color:var(--green-dark);font-weight:600;">Priority: Scrap + EAF for new capacity; WHR for existing BF-BOF assets</div>
+      </div>
+
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:0.5rem;margin-bottom:0.75rem;">
+          <span style="font-weight:700;font-size:0.95rem;">Fertilisers</span>
+          <span style="font-size:0.72rem;font-weight:700;color:var(--grey-600);background:var(--grey-100);padding:0.2rem 0.5rem;border-radius:2px;white-space:nowrap;">₹1,000–2,000/tCO₂e <span style="font-weight:400;opacity:0.7;">(IEA 2023)</span></span>
+        </div>
+        <ul style="font-size:0.83rem;color:#555;line-height:1.75;margin:0;padding-left:1.1rem;">
+          <li>Energy efficiency in ammonia synthesis: feedstock gas optimisation is the primary lever</li>
+          <li>Waste heat recovery from ammonia converter units</li>
+          <li>On-site RE for utilities and auxiliary loads</li>
+          <li>Green hydrogen pilot for Haber-Bosch (commercial scale: 2030+)</li>
+        </ul>
+        <div style="margin-top:0.75rem;font-size:0.75rem;color:var(--green-dark);font-weight:600;">RCF Trombay: brownfield efficiency improvement is viable near-term at existing credit price.</div>
+      </div>
+
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:0.5rem;margin-bottom:0.75rem;">
+          <span style="font-weight:700;font-size:0.95rem;">Textiles</span>
+          <span style="font-size:0.72rem;font-weight:700;color:var(--grey-600);background:var(--grey-100);padding:0.2rem 0.5rem;border-radius:2px;white-space:nowrap;">₹600–1,200/tCO₂e <span style="font-weight:400;opacity:0.7;">(BNEF 2024)</span></span>
+        </div>
+        <ul style="font-size:0.83rem;color:#555;line-height:1.75;margin:0;padding-left:1.1rem;">
+          <li>Boiler and steam system upgrades in dyeing and processing deliver the highest impact per rupee</li>
+          <li>Cluster-scale group RE procurement: Nagpur and Ichalkaranji are well-suited for aggregated solar</li>
+          <li>Solar thermal for process heat at cluster scale</li>
+          <li>RE100-aligned corporate procurement for large integrated mills</li>
+        </ul>
+        <div style="margin-top:0.75rem;font-size:0.75rem;color:var(--green-dark);font-weight:600;">Cluster model preferred. Individual entity abatement cost is too high; aggregation unlocks the economics.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Financing instruments -->
+  <div style="margin-bottom:2rem;">
+    <p class="section-header">Financing Instruments Available for Maharashtra CCTS Abatement</p>
+    <div class="table-scroll-wrapper">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Instrument</th>
+          <th>Institution</th>
+          <th>Type</th>
+          <th>Applicable Sectors</th>
+          <th>Key Feature</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Maharashtra RE Access Programme</strong></td>
+          <td>AIIB</td>
+          <td><span class="policy-status-badge status-active">MDB Loan</span></td>
+          <td>Cement, Steel (on-site RE)</td>
+          <td style="font-size:0.8rem;">$270M committed; low-cost debt for distributed renewable energy</td>
+        </tr>
+        <tr>
+          <td><strong>India Climate Finance Programme</strong></td>
+          <td>ADB</td>
+          <td><span class="policy-status-badge status-active">MDB</span></td>
+          <td>Multi-sector</td>
+          <td style="font-size:0.8rem;">Technical assistance + co-financing for industrial energy transition projects</td>
+        </tr>
+        <tr>
+          <td><strong>IFC Climate Finance</strong></td>
+          <td>IFC / World Bank</td>
+          <td><span class="policy-status-badge status-active">MDB</span></td>
+          <td>Industrial decarbonisation</td>
+          <td style="font-size:0.8rem;">Direct equity and debt; green bond certification and structuring support</td>
+        </tr>
+        <tr>
+          <td><strong>SIDBI Energy Efficiency Fund</strong></td>
+          <td>SIDBI</td>
+          <td><span class="policy-status-badge status-active">DFI</span></td>
+          <td>All CCTS sectors (SMEs)</td>
+          <td style="font-size:0.8rem;">₹3,000 Cr fund; sub-market interest rates for energy efficiency projects</td>
+        </tr>
+        <tr>
+          <td><strong>PFC / REC Green Bonds</strong></td>
+          <td>PFC, REC Ltd</td>
+          <td><span class="policy-status-badge status-active">DFI Bond</span></td>
+          <td>Renewable energy, efficiency</td>
+          <td style="font-size:0.8rem;">INR-denominated; listed on BSE/NSE; eligible for on-site RE capex</td>
+        </tr>
+        <tr>
+          <td><strong>GCF Readiness Programme</strong></td>
+          <td>Green Climate Fund</td>
+          <td><span class="policy-status-badge status-active">Grant</span></td>
+          <td>Pilot abatement projects</td>
+          <td style="font-size:0.8rem;">Feasibility and project preparation funding; $270M Maharashtra watershed precedent</td>
+        </tr>
+        <tr>
+          <td><strong>National Clean Energy Fund</strong></td>
+          <td>Ministry of Finance, GoI</td>
+          <td><span class="policy-status-badge status-active">GOI Fund</span></td>
+          <td>Clean energy projects</td>
+          <td style="font-size:0.8rem;">Concessional finance for qualifying renewable energy and efficiency projects, subject to current GoI operational guidelines</td>
+        </tr>
+        <tr>
+          <td><strong>CCTS Carbon Credit Revenue</strong></td>
+          <td>BEE / ICCM</td>
+          <td><span class="policy-status-badge status-forthcoming">Market</span></td>
+          <td>All abatement projects</td>
+          <td style="font-size:0.8rem;">₹150–600/tCO₂e revenue uplift on verified abatement; improves project IRR across all sectors</td>
+        </tr>
+        <tr>
+          <td><strong>India Green Bond Market</strong></td>
+          <td>Capital markets (SEBI)</td>
+          <td><span class="policy-status-badge status-active">Debt</span></td>
+          <td>Certified green projects</td>
+          <td style="font-size:0.8rem;">USD 55.9B market; RBI sovereign green bond precedent; SEBI green debt taxonomy active</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <!-- Investor landscape -->
+  <div style="margin-bottom:2rem;">
+    <p class="section-header">Investor Landscape — Maharashtra CCTS Abatement Pipeline</p>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;" class="form-grid">
+
+      <div class="card">
+        <div style="font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--green-dark);margin-bottom:0.6rem;border-bottom:2px solid var(--green-light);padding-bottom:0.4rem;">Multilateral Development Banks</div>
+        <ul style="font-size:0.83rem;color:#555;line-height:1.75;margin:0;padding-left:1.1rem;">
+          <li><strong>AIIB</strong> — Maharashtra RE committed ($270M)</li>
+          <li><strong>ADB</strong> — India industrial clean energy portfolio</li>
+          <li><strong>IFC</strong> — Direct equity + debt, green bond support</li>
+          <li><strong>World Bank</strong> — India CCTS technical assistance</li>
+        </ul>
+        <div style="margin-top:0.75rem;font-size:0.75rem;color:var(--grey-600);">Engagement route: NABARD (National Designated Authority) or MITRA direct</div>
+      </div>
+
+      <div class="card">
+        <div style="font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--green-dark);margin-bottom:0.6rem;border-bottom:2px solid var(--green-light);padding-bottom:0.4rem;">Development Finance Institutions</div>
+        <ul style="font-size:0.83rem;color:#555;line-height:1.75;margin:0;padding-left:1.1rem;">
+          <li><strong>SIDBI</strong> — SME energy efficiency fund (₹3,000 Cr)</li>
+          <li><strong>PFC</strong> — Power sector and industrial RE lending</li>
+          <li><strong>REC Ltd</strong> — Renewable energy project finance</li>
+          <li><strong>NABARD</strong> — Agriculture + rural RE adjacency</li>
+        </ul>
+        <div style="margin-top:0.75rem;font-size:0.75rem;color:var(--grey-600);">Direct lending to obligated entities; most familiar with Indian regulatory context</div>
+      </div>
+
+      <div class="card">
+        <div style="font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--green-dark);margin-bottom:0.6rem;border-bottom:2px solid var(--green-light);padding-bottom:0.4rem;">Climate Funds</div>
+        <ul style="font-size:0.83rem;color:#555;line-height:1.75;margin:0;padding-left:1.1rem;">
+          <li><strong>GCF</strong> — Grant + concessional debt; MH precedent</li>
+          <li><strong>GEF</strong> — Global Environment Facility co-finance</li>
+          <li><strong>CIF</strong> — Climate Investment Funds (CTF, SREP)</li>
+          <li><strong>CERF</strong> — Climate emergency response facility</li>
+        </ul>
+        <div style="margin-top:0.75rem;font-size:0.75rem;color:var(--grey-600);">Useful for project preparation, feasibility, and first-loss tranches in blended structures</div>
+      </div>
+
+      <div class="card">
+        <div style="font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--green-dark);margin-bottom:0.6rem;border-bottom:2px solid var(--green-light);padding-bottom:0.4rem;">Private Capital</div>
+        <ul style="font-size:0.83rem;color:#555;line-height:1.75;margin:0;padding-left:1.1rem;">
+          <li><strong>Climate PE</strong> — Lightrock, Bain Capital Impact</li>
+          <li><strong>Infrastructure funds</strong> — Macquarie, CDPQ India</li>
+          <li><strong>Green bonds</strong> — SEBI framework active; ₹54,000 Cr issued FY25</li>
+          <li><strong>Sustainability-linked loans</strong> — DBS, HSBC, Standard Chartered India</li>
+        </ul>
+        <div style="margin-top:0.75rem;font-size:0.75rem;color:var(--grey-600);">Returns: energy savings + CCTS credit revenue + ESG premium on refinancing</div>
+      </div>
+
+      <div class="card">
+        <div style="font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--green-dark);margin-bottom:0.6rem;border-bottom:2px solid var(--green-light);padding-bottom:0.4rem;">Philanthropic &amp; Catalytic</div>
+        <ul style="font-size:0.83rem;color:#555;line-height:1.75;margin:0;padding-left:1.1rem;">
+          <li><strong>India Climate Collaborative</strong> — 100+ partner network</li>
+          <li><strong>AVPN</strong> — MH CIFP programme co-lead</li>
+          <li><strong>Bezos Earth Fund</strong> — India climate programme active</li>
+          <li><strong>Bloomberg Philanthropies</strong> — India cities and industry focus</li>
+        </ul>
+        <div style="margin-top:0.75rem;font-size:0.75rem;color:var(--grey-600);">Catalytic capital for project preparation, feasibility, and first-mover risk absorption</div>
+      </div>
+
+      <div class="card card-dark">
+        <div style="font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--green);margin-bottom:0.6rem;border-bottom:2px solid #333;padding-bottom:0.4rem;">Blended Finance Logic</div>
+        <div style="font-size:0.84rem;color:#ccc;line-height:1.65;">
+          Concessional public capital (GCF, AIIB) absorbs first-loss risk. DFI debt (SIDBI, PFC) provides project finance at sub-market rates. Private equity and green bonds provide equity and senior debt. CCTS carbon credit revenue improves project IRR across all tranches, making projects viable that would otherwise not clear the hurdle rate on energy savings alone.
+        </div>
+        <div style="margin-top:0.9rem;font-size:0.78rem;color:var(--green);font-weight:600;">The MH CIFP role: structuring the deal and convening the actors.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SAPCC alignment strip -->
+  <div class="card card-dark cta-strip" style="margin-bottom:2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;">
+    <div>
+      <div style="font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--green);font-weight:700;margin-bottom:0.3rem;">Maharashtra SAPCC 2.0 Alignment</div>
+      <div style="font-size:1rem;font-weight:700;color:#fff;">Maharashtra SAPCC 2.0: ₹3 Lakh Crore Climate Finance Target by 2030, with Industrial Decarbonisation as a Core Pillar</div>
+      <div style="font-size:0.83rem;color:#aaa;margin-top:0.25rem;">CCTS-sector abatement (₹6,000–10,000 Cr) is 0.2–0.3% of the total SAPCC 2.0 financing need. Cement and steel are the highest-leverage, fastest-to-deploy workstreams in the plan, with the compliance deadline as an external forcing function.</div>
+    </div>
+    <a href="policy-tracker.html" class="btn-primary" style="white-space:nowrap;">
+      View Carbon Markets Policies →
+    </a>
+  </div>
+
+  <!-- Methodology note -->
+  <div class="disclaimer">
+    <strong>Methodology &amp; Limitations:</strong> Maharashtra entity counts are estimated by proportioning national CCTS coverage (BEE FY2026 notifications) by Maharashtra's approximate share of sector output, derived from the CSO Annual Survey of Industries and CMIE Prowess. Compliance gaps are calculated at sector-average emission intensity versus the BEE CCTS target intensity for each sector. Abatement cost ranges are drawn from IEA India Decarbonisation Pathways (2023), BNEF India Clean Energy Outlook (2024), and McKinsey Decarbonising India (2022). All figures are directional. Actual per-entity compliance positions require facility-level MRV data available only after BEE monitoring plan approval. These estimates should be independently verified before use in investment decisions or programme design documents.
+  </div>
+
+</main>
+
+<!-- ── Footer ────────────────────────────────────────────────── -->
+<footer class="site-footer">
+  <div style="max-width:1200px;margin:0 auto;padding:0 1.5rem;">
+    <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:1rem;">
+      <div>
+        <div style="color:var(--green);font-weight:700;font-size:0.9rem;margin-bottom:0.4rem;">Carbon Intelligence India</div>
+        <div>A prototype carbon compliance and policy intelligence tool for India's advisory market.</div>
+      </div>
+      <div style="text-align:right;">
+        <div style="margin-bottom:0.25rem;"><a href="index.html">CCTS Calculator</a></div>
+        <div style="margin-bottom:0.25rem;"><a href="policy-tracker.html">Policy Tracker</a></div>
+        <div style="margin-bottom:0.25rem;"><a href="about.html">About &amp; Methodology</a></div>
+      </div>
+    </div>
+    <div style="border-top:1px solid #333;padding-top:1rem;">
+      This tool is a prototype demonstration. Outputs are indicative only and do not constitute legal, financial, or compliance advice. Maharashtra-level figures are modelled estimates, not official BEE or government data.
+      Data sourced from BEE, MoEFCC, AIIB, GCF, IEA, WSA, CII, CMIE, and the India Climate &amp; Environment Policy Landscape Report (April 2026).
+    </div>
+  </div>
+</footer>
+
+<!-- ── Chart ─────────────────────────────────────────────────── -->
+<script>
+const ctx = document.getElementById('gapChart').getContext('2d');
+new Chart(ctx, {
+  type: 'bar',
+  data: {
+    labels: ['Cement', 'Iron & Steel', 'Fertilisers', 'Textiles', 'Petroleum', 'Others'],
+    datasets: [{
+      label: 'Compliance Gap (tCO₂e)',
+      data: [2420000, 1683000, 186000, 92000, 46000, 73000],
+      backgroundColor: [
+        'rgba(211,47,47,0.85)',
+        'rgba(211,47,47,0.65)',
+        'rgba(230,81,0,0.8)',
+        'rgba(230,81,0,0.6)',
+        'rgba(107,107,107,0.65)',
+        'rgba(107,107,107,0.5)',
+      ],
+      borderRadius: 3,
+    }],
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: ctx => `${ctx.parsed.x.toLocaleString()} tCO₂e`,
+        },
+      },
+    },
+    scales: {
+      x: {
+        ticks: {
+          font: { size: 10 },
+          callback: v => v >= 1000000
+            ? (v / 1000000).toFixed(1) + 'M'
+            : v >= 1000 ? (v / 1000).toFixed(0) + 'K' : v,
+        },
+        grid: { color: 'rgba(0,0,0,0.06)' },
+      },
+      y: {
+        ticks: { font: { size: 11 } },
+        grid: { display: false },
+      },
+    },
+  },
+});
+</script>
+
+</body>
+</html>
