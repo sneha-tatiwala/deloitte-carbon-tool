@@ -1,6 +1,19 @@
 require('dotenv').config();
 const fetch = require('node-fetch');
 
+// ── Upstash Redis helper ────────────────────────────────────────────────────
+async function redis(command) {
+  const url   = process.env.UPSTASH_REDIS_REST_URL;
+  const token = process.env.UPSTASH_REDIS_REST_TOKEN;
+  if (!url || !token) return null;
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify(command),
+  });
+  return res.json();
+}
+
 const SECTOR_NAMES = {
   cement:            'Cement',
   aluminium:         'Aluminium',
@@ -35,6 +48,10 @@ module.exports = async function handler(req, res) {
 
   const sectorLabel = SECTOR_NAMES[sector] || 'All sectors';
   const now = new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' });
+
+  // Store subscriber in Upstash (gracefully skips if env vars not set)
+  await redis(['SADD', 'ccts:subscribers', email]);
+  await redis(['HSET', `ccts:sub:${email}`, 'sector', sector || 'all', 'subscribedAt', new Date().toISOString()]);
 
   try {
     // Confirmation to subscriber
